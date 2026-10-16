@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bundle & Quantity Discount App – Documentation | VSApps</title>
+  <meta name="description" content="Documentation for the Bundle & Quantity Discount App by VSApps: setup, configuration, checkout options and troubleshooting.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="brand" href="#home"><span class="logo">V</span> VSApps <small>Docs</small></a>
+  <div class="search">
+    <input id="searchInput" type="search" placeholder="Search documentation…" autocomplete="off" aria-label="Search documentation">
+    <div class="results" id="searchResults" hidden></div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Documentation navigation">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#what-it-does">What the App Does</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#bundle-discounts">Bundle Discounts Setup</a></li>
+      <li><a href="#configuration">Bundle Template Configuration</a></li>
+      <li><a href="#checkout">Checkout Settings</a></li>
+      <li><a href="#appearance">Appearance &amp; Content</a></li>
+      <li><a href="#pin-product">Pin a Product to the Top</a></li>
+      <li><a href="#customer-experience">Customer Experience</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+      <li><a href="#support">Support</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="content">
+
+    <!-- 1. HOME -->
+    <section id="home" data-title="Home">
+      <h1>Bundle &amp; Quantity Discount App</h1>
+      <p class="lead">Create bundle offers and quantity discounts that help increase average order value.</p>
+      <a class="btn" href="#installation">Get Started</a>
+
+      <div class="cards">
+        <div class="card"><h3>Fixed-price bundles</h3><p>Sell a set number of products for one total price.</p></div>
+        <div class="card"><h3>Buy X Get Y Free</h3><p>Reward customers with free products when they buy enough.</p></div>
+        <div class="card"><h3>Percentage discounts</h3><p>Give a percentage off once the bundle is complete.</p></div>
+        <div class="card"><h3>Bundle template block</h3><p>Add a ready-made bundle builder to your theme.</p></div>
+        <div class="card"><h3>Variant selection</h3><p>Customers pick size, color and other options.</p></div>
+        <div class="card"><h3>Checkout support</h3><p>Works with Shopify, Shiprocket, GoKwik and custom checkout.</p></div>
+        <div class="card"><h3>Policies &amp; size charts</h3><p>Show size charts, shipping and return policy content.</p></div>
+      </div>
+
+      <h2 id="toc">Table of contents</h2>
+      <ol class="toc">
+        <li><a href="#what-it-does">What the App Does</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#bundle-discounts">Bundle Discounts Setup</a></li>
+        <li><a href="#configuration">Bundle Template Configuration</a></li>
+        <li><a href="#checkout">Checkout Settings</a></li>
+        <li><a href="#appearance">Appearance and Content Settings</a></li>
+        <li><a href="#pin-product">Pin a Product to the Top</a></li>
+        <li><a href="#customer-experience">Customer Experience</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </section>
+
+    <!-- 2. WHAT IT DOES -->
+    <section id="what-it-does" data-title="What the App Does">
+      <h2>What the App Does</h2>
+      <p>The app lets your customers build their own bundle from products you choose. Once they select the required number of products, they automatically receive your offer.</p>
+      <p>Before adding a product to the bundle, customers can choose its variant, such as size and color. This means one bundle can include different sizes and colors of the same or different products.</p>
+      <div class="callout tip"><strong>Tip</strong>Bundles work best when the products are related, for example t-shirts, socks or skincare items.</div>
+    </section>
+
+    <!-- 3. INSTALLATION -->
+    <section id="installation" data-title="Installation">
+      <h2>Installation</h2>
+      <ol class="steps">
+        <li><strong>Install the app</strong> from the Shopify App Store.</li>
+        <li><strong>Open the app</strong> from your Shopify Admin.</li>
+        <li><strong>Create or configure a bundle offer</strong> inside the app.</li>
+        <li>Go to <strong>Online Store &gt; Themes &gt; Customize</strong>.</li>
+        <li>Add the <strong>“Bundle Template”</strong> app block to the page or section where you want it.</li>
+        <li><strong>Save</strong> and preview your storefront.</li>
+      </ol>
+      <div class="placeholder">Screenshot: Adding the Bundle Template app block in the theme editor</div>
+      <div class="callout tip"><strong>Tip</strong>Create a dedicated page (for example “Build Your Bundle”) and add the block there for the cleanest result.</div>
+    </section>
+
+    <!-- 4. BUNDLE DISCOUNTS -->
+    <section id="bundle-discounts" data-title="Bundle Discounts Setup">
+      <h2>Bundle Discounts: step-by-step setup</h2>
+      <p>Use this guide when you want Shopify to apply an automatic discount after a customer adds a qualifying bundle to their cart. You do not need technical knowledge—work through the sections in order and use the example values as a starting point.</p>
+      <div class="callout note"><strong>Before you start</strong>Decide what you want shoppers to see. For example: “Buy any 3 items for ₹1,999.” You will use this wording for the offer name and cart message.</div>
+
+      <div class="setup-overview" aria-label="Bundle Discount setup overview">
+        <a href="#offer-details">1. Offer details</a>
+        <a href="#discount-limits">2. Limits &amp; combinations</a>
+        <a href="#eligibility-schedule">3. Eligibility &amp; schedule</a>
+      </div>
+
+      <h3 id="offer-details">1. Name the offer and choose how shoppers save</h3>
+      <p>Give the offer a clear internal name, such as <strong>BUY 3 AT 1999</strong>. Add a short customer message, choose when it starts, and leave the end date empty if you want the offer to keep running.</p>
+      <p>Under <strong>Choose how shoppers save</strong>, select the discount type that matches your promotion:</p>
+      <ul>
+        <li><strong>Fixed bundle price:</strong> set one total price for the whole bundle. Example: 3 items for ₹1,999.</li>
+        <li><strong>Percentage off:</strong> take a percentage off the qualifying items. Example: buy 3 and get 15% off.</li>
+        <li><strong>Buy X Get Y Free:</strong> give an item free when shoppers buy the required quantity. Example: buy 2, get 1 free.</li>
+      </ul>
+      <p>For a fixed-price offer, enter the <strong>bundle quantity</strong> and the <strong>bundle price</strong>. Use <strong>Add tier</strong> only when you want more than one offer level, such as 3 for ₹1,999 and 5 for ₹2,999. The optional tier cap limits how often that tier can be used.</p>
+
+      <figure class="doc-image">
+        <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-01.png?v=1792062800" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-01.png?v=1792062800" alt="Bundle Discounts screen showing offer details and fixed bundle price settings">
+        </a>
+        <figcaption>Example: a “Buy 3 at 1999” fixed-price bundle. <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-01.png?v=1792062800" target="_blank" rel="noopener noreferrer">Open the full-size image</a>.</figcaption>
+      </figure>
+
+      <h3 id="discount-limits">2. Decide how often the discount can apply</h3>
+      <p>Choose the rule that feels right for your promotion:</p>
+      <ul>
+        <li><strong>Apply once per order:</strong> one qualifying bundle receives the discount. This is the simplest choice for most offers.</li>
+        <li><strong>Repeat for every qualifying bundle:</strong> the discount repeats for every complete group in the cart.</li>
+        <li><strong>Limit number of bundles:</strong> set a maximum number of complete bundles that can receive the discount.</li>
+        <li><strong>Limit discounted items:</strong> set a maximum number of eligible items that can be discounted.</li>
+      </ul>
+      <p>Keep <strong>Cheapest eligible items first</strong> if you want the discount to apply to the lowest-priced qualifying items. Under <strong>Discount combinations</strong>, tick Product, Order, or Shipping only when you want this offer to stack with that type of Shopify discount.</p>
+
+      <figure class="doc-image">
+        <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-02.png?v=1792062801" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-02.png?v=1792062801" alt="Bundle Discounts screen showing application limits, item priority, and discount combinations">
+        </a>
+        <figcaption>Example: one bundle discount per order, with no additional discount combinations. <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-02.png?v=1792062801" target="_blank" rel="noopener noreferrer">Open the full-size image</a>.</figcaption>
+      </figure>
+
+      <h3 id="eligibility-schedule">3. Choose eligible products, customers, and timing</h3>
+      <p>Use <strong>Product eligibility</strong> to choose whether the offer works on all products or only specific collections. For an offer such as “Buy 3 at 1999,” select the collection containing the products shoppers may mix and match. Use <strong>Choose collections</strong> to add it.</p>
+      <p>Leave <strong>Customer eligibility</strong> as <strong>All customers</strong> to make the promotion available to everyone. Only use customer segments, excluded product IDs, or minimum values when you have a specific advanced rule to apply. You can safely leave those fields blank for a standard offer.</p>
+      <p>Finally, set the start date and time, add an end date only for a limited campaign, and enter the <strong>Cart message</strong> shoppers should see after the discount is applied.</p>
+
+      <figure class="doc-image">
+        <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-03.png?v=1792062801" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-03.png?v=1792062801" alt="Bundle Discounts screen showing eligible products and customers, schedule, and cart message">
+        </a>
+        <figcaption>Example: selected collections, all customers, and a cart message for the offer. <a href="https://cdn.shopify.com/s/files/1/0653/3234/7130/files/upcart-bundle-03.png?v=1792062801" target="_blank" rel="noopener noreferrer">Open the full-size image</a>.</figcaption>
+      </figure>
+
+      <div class="callout tip"><strong>Final check</strong>Save the offer, then add the required products to your storefront cart and confirm that the message and discount appear as expected.</div>
+    </section>
+
+    <!-- 5. CONFIGURATION -->
+    <section id="configuration" data-title="Bundle Template Configuration">
+      <h2>Bundle Template Configuration</h2>
+      <p>Select the Bundle Template block in the theme editor to see these settings.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Products collection</td><td>Choose the collection that contains the products available for the bundle.</td></tr>
+            <tr><td>Discount type</td><td>Choose how the offer works (see below).</td></tr>
+            <tr><td>Required quantity</td><td>Number of products a customer must select to qualify.</td></tr>
+            <tr><td>Free quantity</td><td>Number of free products. Used only for Buy X Get Y Free.</td></tr>
+            <tr><td>Discount value</td><td>The total fixed bundle price, or the percentage discount value.</td></tr>
+            <tr><td>Allow additional products</td><td>Lets customers add more products after completing the offer.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Discount types</h3>
+      <ul>
+        <li><strong>Fixed Price:</strong> Customers buy the required number of products for one total price.</li>
+        <li><strong>Buy X Get Y Free:</strong> Customers select the required products and receive free products.</li>
+        <li><strong>Percentage Off:</strong> Customers receive a percentage discount after completing the bundle.</li>
+      </ul>
+      <div class="placeholder">Screenshot: Bundle Template settings panel</div>
+    </section>
+
+    <!-- 5. CHECKOUT -->
+    <section id="checkout" data-title="Checkout Settings">
+      <h2>Checkout Settings</h2>
+      <p>Choose which checkout your customers use after completing a bundle:</p>
+      <ul>
+        <li><strong>Shopify Checkout</strong> – the standard Shopify checkout.</li>
+        <li><strong>Shiprocket Checkout</strong></li>
+        <li><strong>GoKwik Checkout</strong></li>
+        <li><strong>Custom Checkout</strong></li>
+      </ul>
+      <div class="callout note"><strong>Note</strong>Shiprocket and GoKwik must already be installed and enabled in your <em>published</em> Shopify theme before you select them here.</div>
+
+      <h3>Custom Checkout</h3>
+      <p>Custom Checkout gives you two options:</p>
+      <ul>
+        <li><strong>Custom button HTML</strong> – the HTML of the checkout button shown to customers.</li>
+        <li><strong>Custom checkout JavaScript</strong> (optional) – code that runs when the customer clicks the button.</li>
+      </ul>
+      <div class="code"><button class="copy" type="button">Copy</button><pre><code>&lt;button type="button" class="my-checkout-btn"&gt;Buy Now&lt;/button&gt;</code></pre></div>
+      <div class="callout warn"><strong>Warning</strong>Never include private API keys or secrets in storefront code. Anyone visiting your store can see it.</div>
+    </section>
+
+    <!-- 6. APPEARANCE -->
+    <section id="appearance" data-title="Appearance and Content Settings">
+      <h2>Appearance and Content Settings</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Product image background color</td><td>Sets the background color behind product images.</td></tr>
+            <tr><td>Shopify checkout button label and colors</td><td>Change the button text, background and text color.</td></tr>
+            <tr><td>GoKwik checkout button label</td><td>Change the text on the GoKwik button.</td></tr>
+            <tr><td>Shipping policy content</td><td>Text shown to customers about shipping.</td></tr>
+            <tr><td>Return policy content</td><td>Text shown to customers about returns and exchanges.</td></tr>
+            <tr><td>Policy content image</td><td>An image displayed alongside the policy content.</td></tr>
+            <tr><td>Size chart image</td><td>Upload your size chart so customers can check sizes.</td></tr>
+            <tr><td>Include size chart in image sliders</td><td>Shows the size chart as one of the slides in the product image slider.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="placeholder">Screenshot: Appearance and content settings</div>
+    </section>
+
+    <!-- 7. PIN PRODUCT -->
+    <section id="pin-product" data-title="Pin a Product to the Top">
+      <h2>Pin a Product to the Top</h2>
+      <p>You can place a specific product at the top of the bundle page by adding its <strong>product handle</strong> to the page URL.</p>
+      <h3>Format</h3>
+      <div class="code"><button class="copy" type="button">Copy</button><pre><code>https://your-store.com/pages/your-bundle-page?attop=product-handle</code></pre></div>
+      <h3>Example</h3>
+      <div class="code"><button class="copy" type="button">Copy</button><pre><code>https://warriorworld.in/pages/home-page?attop=trekkers-stylish-soft-cotton-t-shirt</code></pre></div>
+      <div class="callout note"><strong>Important</strong>The query parameter key is exactly <code>attop</code>. The value must be the Shopify product handle.</div>
+      <p>To find a product handle, open the product in Shopify Admin and look at the <em>URL handle</em> in the Search engine listing section.</p>
+    </section>
+
+    <!-- 8. CUSTOMER EXPERIENCE -->
+    <section id="customer-experience" data-title="Customer Experience">
+      <h2>Customer Experience</h2>
+      <ol class="steps">
+        <li>The customer opens the bundle page.</li>
+        <li>The customer chooses products and variants.</li>
+        <li>The bundle progress bar shows how many products are required.</li>
+        <li>The discount is applied once the bundle requirement is met.</li>
+        <li>The customer proceeds through the selected checkout method.</li>
+      </ol>
+      <div class="placeholder">Screenshot: Storefront bundle page with progress bar</div>
+    </section>
+
+    <!-- 9. TROUBLESHOOTING -->
+    <section id="troubleshooting" data-title="Troubleshooting">
+      <h2>Troubleshooting</h2>
+
+      <h3>The Bundle Template does not appear on the page</h3>
+      <p>Make sure the block is added in the theme editor on the correct page, and that you clicked <strong>Save</strong>. Check that the theme you edited is the published one.</p>
+
+      <h3>Products are not showing in the bundle</h3>
+      <p>Check that a Products collection is selected, the collection has products, and the products are active and available on your Online Store sales channel.</p>
+
+      <h3>The pinned product does not appear first</h3>
+      <p>Confirm the URL uses exactly <code>?attop=</code> and that the value is the correct product handle. The product must also be in the selected collection.</p>
+
+      <h3>Checkout button is not working</h3>
+      <p>Check your checkout selection. For Custom Checkout, review your button HTML and JavaScript for mistakes.</p>
+
+      <h3>GoKwik or Shiprocket button is unavailable</h3>
+      <p>The app must be installed and enabled in your published theme. Check that it works on your normal cart page first.</p>
+
+      <h3>Discount is not applied as expected</h3>
+      <p>Check the Discount type, Required quantity and Discount value. Make sure the customer has selected the full required quantity.</p>
+    </section>
+
+    <!-- 10. SUPPORT -->
+    <section id="support" data-title="Support">
+      <h2>Support</h2>
+      <ul>
+        <li><strong>Email:</strong> support@yourdomain.com</li>
+        <li><strong>Store URL:</strong> https://your-store.com</li>
+        <li><strong>Response time:</strong> Within 24 hours (replace with your own)</li>
+      </ul>
+      <p>To help us fix your issue faster, please send:</p>
+      <ul>
+        <li>Screenshots of the problem</li>
+        <li>Your store URL</li>
+        <li>Your bundle configuration details (discount type, quantities, checkout option)</li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" data-title="FAQ">
+      <h2>Frequently Asked Questions</h2>
+      <div class="accordion">
+        <details>
+          <summary>Can customers choose size and color?</summary>
+          <p>Yes. Customers choose product variants before adding items to their bundle.</p>
+        </details>
+        <details>
+          <summary>Can I offer more than one type of discount?</summary>
+          <p>Each Bundle Template block uses one discount type. You can add different blocks on different pages for different offers.</p>
+        </details>
+        <details>
+          <summary>Can customers add more items after the offer is complete?</summary>
+          <p>Yes, if you turn on <strong>Allow additional products</strong>.</p>
+        </details>
+        <details>
+          <summary>Which checkouts are supported?</summary>
+          <p>Shopify Checkout, Shiprocket Checkout, GoKwik Checkout and Custom Checkout.</p>
+        </details>
+        <details>
+          <summary>How do I show a specific product first?</summary>
+          <p>Add <code>?attop=product-handle</code> to your bundle page URL.</p>
+        </details>
+        <details>
+          <summary>Is it safe to add API keys in custom checkout code?</summary>
+          <p>No. Never put private API keys in storefront code.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="footer">© <span id="year"></span> VSApps. All rights reserved.</footer>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

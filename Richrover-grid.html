@@ -1,0 +1,55 @@
+<!-- Rich Rover colour family selector. Add your colour-image URLs to --swatch-image. -->
+
+<!-- {% if
+product.handle == "rich-rover-linen-mens-co-ord-set-green" or
+product.handle == "rich-rover-linen-mens-co-ord-set-black" or
+product.handle == "rich-rover-linen-mens-co-ord-set-brown" or
+product.handle == "rich-rover-linen-mens-co-ord-set-navy" or
+product.handle == "rich-rover-linen-mens-co-ord-set-beige" 
+%}{% endif %} -->
+
+
+<section class="richrover-colours" aria-labelledby="richrover-colours-title">
+  <div class="richrover-colours__heading">
+    <p>Available colours</p>
+    <h2 id="richrover-colours-title">Choose your colour</h2>
+    <span>6 colours available</span>
+  </div>
+
+  <nav class="richrover-colours__grid" aria-label="Choose a Rich Rover Linen Co-ord Set colour">
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-1" data-product-handle="rich-rover-linen-mens-co-ord-set-1" data-product-id="8102023397515" data-colour="White" style="--swatch:#f4f1e8; --swatch-border:#b9b2a6; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_1_2026-03-13_23-58-07.jpg?v=1773426509');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>White</span>
+    </a>
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-black" data-product-handle="rich-rover-linen-mens-co-ord-set-black" data-product-id="10326551494795" data-colour="Black" style="--swatch:#1e1e1e; --swatch-border:#1e1e1e; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_3_2026-03-13_23-58-07.jpg?v=1773426538');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>Black</span>
+    </a>
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-beige" data-product-handle="rich-rover-linen-mens-co-ord-set-beige" data-product-id="10327696769163" data-colour="Beige" style="--swatch:#d6c4a5; --swatch-border:#a88f67; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_5_2026-03-13_23-58-07.jpg?v=1773426538');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>Beige</span>
+    </a>
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-navy" data-product-handle="rich-rover-linen-mens-co-ord-set-navy" data-product-id="10327697555595" data-colour="Navy" style="--swatch:#28384e; --swatch-border:#28384e; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_2_2026-03-13_23-58-07.jpg?v=1773426538');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>Navy</span>
+    </a>
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-brown" data-product-handle="rich-rover-linen-mens-co-ord-set-brown" data-product-id="10327697162379" data-colour="Brown" style="--swatch:#6d4631; --swatch-border:#6d4631; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_4_2026-03-13_23-58-07.jpg?v=1773426538');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>Brown</span>
+    </a>
+    <a class="richrover-colours__option" href="https://richrover.com/products/rich-rover-linen-mens-co-ord-set-green" data-product-handle="rich-rover-linen-mens-co-ord-set-green" data-product-id="10327701061771" data-colour="Green" style="--swatch:#526a4c; --swatch-border:#526a4c; --swatch-image:url('https://richrover.com/cdn/shop/files/photo_6_2026-03-13_23-58-07.jpg?v=1773426538');">
+      <span class="richrover-colours__image" aria-hidden="true"></span><span>Green</span>
+    </a>
+  </nav>
+</section>
+
+<style>
+  .richrover-colours{max-width:680px;margin:28px 0;font-family:inherit;color:#1c1c1c}
+  .richrover-colours__heading{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+  .richrover-colours__heading p{width:100%;margin:0;color:#777;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+  .richrover-colours__heading h2{margin:0;font-size:19px;line-height:1.2}
+  .richrover-colours__heading>span{font-size:14px;font-weight:600}
+  .richrover-colours__heading>span::before{content:'—';margin-right:8px;color:#aaa}
+  .richrover-colours__grid{display:flex;gap:12px;flex-wrap:wrap}
+  .richrover-colours__option{display:grid;gap:8px;justify-items:center;min-width:72px;color:inherit;font-size:12px;font-weight:650;line-height:1.15;text-align:center;text-decoration:none}
+  .richrover-colours__image{display:block;width:68px;height:94px;border:3px solid var(--swatch-border);border-radius:6px;outline:1px solid #fff;outline-offset:2px;background-color:var(--swatch);background-image:var(--swatch-image);background-position:center;background-size:cover;box-shadow:0 1px 4px rgba(0,0,0,.14);transition:transform .18s ease,outline-color .18s ease,box-shadow .18s ease}
+  .richrover-colours__option:hover .richrover-colours__image{transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,.18)}
+  .richrover-colours__option:focus-visible{border-radius:4px;outline:2px solid #111;outline-offset:4px}
+  @media(max-width:480px){.richrover-colours__grid{gap:14px}.richrover-colours__image{width:58px;height:80px}.richrover-colours__option{min-width:58px;font-size:11px}}
+</style>
+

@@ -1,3 +1,4 @@
+
 {%- assign bundle_quantity = 4 -%}
 {%- assign bundle_price = 1999 -%}
 {%- assign checkout_button_title = settings['buynow-titile'] | default: 'Checkout' -%}
@@ -59,11 +60,19 @@
           "next": {{ paginate.next.url | json }},
           "products": [
             {%- for product in collection.products -%}
+              {%- assign fake_rating_index = product.id | modulo: 5 -%}
+              {%- case fake_rating_index -%}
+                {%- when 0 -%}{%- assign fake_rating = '4.6' -%}
+                {%- when 1 -%}{%- assign fake_rating = '4.7' -%}
+                {%- when 2 -%}{%- assign fake_rating = '4.8' -%}
+                {%- when 3 -%}{%- assign fake_rating = '4.9' -%}
+                {%- else -%}{%- assign fake_rating = '5.0' -%}
+              {%- endcase -%}
               {
                 "product": {{ product | json | replace: '<', '\u003c' }},
                 "url": {{ product.url | json }},
-                "rating": {{ product.metafields.reviews.rating.value.rating | json }},
-                "ratingCount": {{ product.metafields.reviews.rating_count.value | json }}
+                "rating": {{ fake_rating | json }},
+                "ratingCount": {{ product.metafields.custom.custom_reveiw.value | default: 0 | json }}
               }{% unless forloop.last %},{% endunless %}
             {%- endfor -%}
           ]
@@ -337,6 +346,10 @@
   @media (prefers-reduced-motion:reduce) { .vs-bundle * { scroll-behavior:auto !important; transition:none !important; } }
 </style>
 <script>
+
+
+
+
   (() => {
     'use strict';
     // A single definition also handles sections reloaded by the theme editor.
@@ -618,6 +631,7 @@
         )} images">${images}</div>${rating}${
           !popup && sold ? '<div class="vs-sold-overlay"><span>Sold Out</span></div>' : ''
         }${dots}</div>`;
+        
       }
       setupGalleries(container) {
         container.querySelectorAll('[data-gallery]').forEach((gallery) => {
@@ -1335,7 +1349,7 @@
         const autoGiftStatus = this.section.querySelector('[data-auto-gift-status]');
         autoGiftStatus.hidden = !offerApplied;
         autoGiftStatus.textContent = offerApplied
-          ? 'Free Mystery Jewellery: offer information only. This item is not added to your cart.'
+          ? 'Free Mystery Jewellery Product Auto Added At Checkout.'
           : '';
         const check =
           '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1458,3 +1472,5 @@
   "max_blocks": 50
 }
 {% endschema %}
+
+

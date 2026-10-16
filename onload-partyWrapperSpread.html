@@ -108,6 +108,7 @@
     }
 
     async function onCartUpdate() {
+       vs_partwrapper();
       try {
         const response = await fetch('/cart.js', {
           headers: { Accept: 'application/json' }

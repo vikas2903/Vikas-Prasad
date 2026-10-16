@@ -1,0 +1,254 @@
+{%- liquid
+  assign skin_tint = all_products['cmc-skin-tint']
+  assign glow_drip = all_products['cmc-blush-drip']
+  assign bundle_price = 129900
+-%}
+
+<section id="charmacy-bundle-page" class="charmacy-bundle" aria-labelledby="bundle-title">
+  <header class="charmacy-bundle__header">
+    <span>Limited-time bundle offer</span>
+    <h1 id="bundle-title">Your glow, bundled.</h1>
+    <p>Choose your perfect shades and get both beauty essentials for one special price.</p>
+  </header>
+
+  <div class="charmacy-bundle__hero" aria-live="polite">
+    <div><span>Skin Tint + Glow Drip</span><h2>Two steps to a fresh, radiant finish.</h2></div>
+    <div class="charmacy-bundle__hero-price"><small>Bundle price</small><strong>{{ bundle_price | money }}</strong><del data-regular-total></del><em data-saving hidden></em></div>
+  </div>
+
+  <div class="charmacy-bundle__products">
+    <article class="charmacy-bundle__card" data-product-card>
+      {% if skin_tint != blank %}
+        {% assign selected = skin_tint.selected_or_first_available_variant %}
+        {% assign image = selected.featured_media.preview_image | default: selected.featured_image | default: skin_tint.featured_image %}
+        {% assign display_price = selected.compare_at_price | default: selected.price %}
+        <div class="charmacy-bundle__image">
+          {% if image != blank %}<img data-product-image src="{{ image | image_url: width: 640 }}" alt="{{ skin_tint.title | escape }} — {{ selected.title | escape }}" width="320" height="360" loading="lazy">{% endif %}
+        </div>
+        <div class="charmacy-bundle__copy">
+          <span class="charmacy-bundle__step">Step 1</span>
+          <h2>{{ skin_tint.title | escape }}</h2>
+          <a href="{{ skin_tint.url }}">View product details <span aria-hidden="true">→</span></a>
+
+          {% if skin_tint.has_only_default_variant == false %}
+            <input type="hidden" data-variant-select value="{{ selected.id }}" data-price="{{ selected.price }}" data-compare-price="{{ display_price }}" data-image="{{ image | image_url: width: 640 }}" data-available="{{ selected.available }}" data-title="{{ selected.title | escape }}">
+            <div class="charmacy-bundle__shade-picker" data-swatch-picker>
+              <p class="charmacy-bundle__shade-heading">Choose your shade: <strong data-selected-shade>{{ selected.title | escape }}</strong></p>
+              <div class="charmacy-bundle__swatches" role="radiogroup" aria-label="Choose {{ skin_tint.title | escape }} shade">
+                {% for variant in skin_tint.variants %}
+                  {% assign variant_image = variant.featured_media.preview_image | default: variant.featured_image | default: skin_tint.featured_image %}
+                  {% assign swatch_handle = variant.title | handleize %}
+                  {% assign variant_display_price = variant.compare_at_price | default: variant.price %}
+                  <label class="charmacy-bundle__swatch{% if variant.id == selected.id %} is-selected{% endif %}{% unless variant.available %} is-sold-out{% endunless %}">
+                    <input class="charmacy-bundle__swatch-input" type="radio" name="skin-tint-shade" value="{{ variant.id }}" data-swatch data-price="{{ variant.price }}" data-compare-price="{{ variant_display_price }}" data-image="{{ variant_image | image_url: width: 640 }}" data-title="{{ variant.title | escape }}" data-available="{{ variant.available }}" {% if variant.id == selected.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    <span class="charmacy-bundle__swatch-colour" style="background-image:url('https://charmacyworld.com/cdn/shop/files/{{ swatch_handle }}_50x50.png');" aria-hidden="true"></span>
+                    <span class="charmacy-bundle__swatch-name">{{ variant.title | escape }}</span>
+                    {% unless variant.available %}<span class="charmacy-bundle__swatch-sold">Sold<br>out</span>{% endunless %}
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <input type="hidden" data-variant-select value="{{ selected.id }}" data-price="{{ selected.price }}" data-compare-price="{{ display_price }}" data-image="{{ image | image_url: width: 640 }}" data-available="{{ selected.available }}" data-title="{{ selected.title | escape }}">
+          {% endif %}
+          <strong data-variant-price>{{ display_price | money }}</strong>
+        </div>
+      {% else %}<p>Skin Tint is currently unavailable.</p>{% endif %}
+    </article>
+
+    <span class="charmacy-bundle__plus" aria-label="plus">+</span>
+
+    <article class="charmacy-bundle__card" data-product-card>
+      {% if glow_drip != blank %}
+        {% assign selected = glow_drip.selected_or_first_available_variant %}
+        {% assign image = selected.featured_media.preview_image | default: selected.featured_image | default: glow_drip.featured_image %}
+        {% assign display_price = selected.compare_at_price | default: selected.price %}
+        <div class="charmacy-bundle__image">
+          {% if image != blank %}<img data-product-image src="{{ image | image_url: width: 640 }}" alt="{{ glow_drip.title | escape }} — {{ selected.title | escape }}" width="320" height="360" loading="lazy">{% endif %}
+        </div>
+        <div class="charmacy-bundle__copy">
+          <span class="charmacy-bundle__step">Step 2</span>
+          <h2>{{ glow_drip.title | escape }}</h2>
+          <a href="{{ glow_drip.url }}">View product details <span aria-hidden="true">→</span></a>
+
+          {% if glow_drip.has_only_default_variant == false %}
+            <input type="hidden" data-variant-select value="{{ selected.id }}" data-price="{{ selected.price }}" data-compare-price="{{ display_price }}" data-image="{{ image | image_url: width: 640 }}" data-available="{{ selected.available }}" data-title="{{ selected.title | escape }}">
+            <div class="charmacy-bundle__shade-picker" data-swatch-picker>
+              <p class="charmacy-bundle__shade-heading">Choose your shade: <strong data-selected-shade>{{ selected.title | escape }}</strong></p>
+              <div class="charmacy-bundle__swatches" role="radiogroup" aria-label="Choose {{ glow_drip.title | escape }} shade">
+                {% for variant in glow_drip.variants %}
+                  {% assign variant_image = variant.featured_media.preview_image | default: variant.featured_image | default: glow_drip.featured_image %}
+                  {% assign swatch_handle = variant.title | handleize %}
+                  {% assign variant_display_price = variant.compare_at_price | default: variant.price %}
+                  <label class="charmacy-bundle__swatch{% if variant.id == selected.id %} is-selected{% endif %}{% unless variant.available %} is-sold-out{% endunless %}">
+                    <input class="charmacy-bundle__swatch-input" type="radio" name="glow-drip-shade" value="{{ variant.id }}" data-swatch data-price="{{ variant.price }}" data-compare-price="{{ variant_display_price }}" data-image="{{ variant_image | image_url: width: 640 }}" data-title="{{ variant.title | escape }}" data-available="{{ variant.available }}" {% if variant.id == selected.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    <span class="charmacy-bundle__swatch-colour" style="background-image:url('https://charmacyworld.com/cdn/shop/files/{{ swatch_handle }}_50x50.png');" aria-hidden="true"></span>
+                    <span class="charmacy-bundle__swatch-name">{{ variant.title | escape }}</span>
+                    {% unless variant.available %}<span class="charmacy-bundle__swatch-sold">Sold<br>out</span>{% endunless %}
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <input type="hidden" data-variant-select value="{{ selected.id }}" data-price="{{ selected.price }}" data-compare-price="{{ display_price }}" data-image="{{ image | image_url: width: 640 }}" data-available="{{ selected.available }}" data-title="{{ selected.title | escape }}">
+          {% endif %}
+          <strong data-variant-price>{{ display_price | money }}</strong>
+        </div>
+      {% else %}<p>Glow Drip is currently unavailable.</p>{% endif %}
+    </article>
+  </div>
+
+  <footer class="charmacy-bundle__checkout">
+    <div><span>Both products for</span><strong>{{ bundle_price | money }}</strong></div>
+    <button type="button" data-add-bundle>Add bundle to cart <span aria-hidden="true">→</span></button>
+  </footer>
+  <p class="charmacy-bundle__status" data-status role="status" aria-live="polite"></p>
+</section>
+
+<style>
+  #charmacy-bundle-page,#charmacy-bundle-page *{box-sizing:border-box}
+  #charmacy-bundle-page{--wine:#751c42;--rose:#faedf2;--ink:#2b2025;--line:#ecd8e0;max-width:1100px;width:calc(100% - 32px);margin:36px auto;color:var(--ink);font-family:inherit}
+  #charmacy-bundle-page .charmacy-bundle__header{max-width:620px;margin:0 auto 26px;text-align:center}
+  #charmacy-bundle-page .charmacy-bundle__header>span,#charmacy-bundle-page .charmacy-bundle__step{display:block;margin-bottom:7px;color:var(--wine);font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  #charmacy-bundle-page h1,#charmacy-bundle-page h2,#charmacy-bundle-page p{color:inherit}
+  #charmacy-bundle-page h1{margin:0 0 10px;font-size:clamp(30px,4vw,45px);line-height:1.08;font-weight:800;letter-spacing:-.04em}
+  #charmacy-bundle-page .charmacy-bundle__header p{margin:0;color:#74666c;line-height:1.6}
+  #charmacy-bundle-page .charmacy-bundle__hero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:25px clamp(20px,4vw,42px);border-radius:18px;background:var(--wine);color:#fff}
+  #charmacy-bundle-page .charmacy-bundle__hero>div>span{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+  #charmacy-bundle-page .charmacy-bundle__hero h2{margin:7px 0 0;font-size:clamp(19px,2.6vw,28px);line-height:1.25}
+  #charmacy-bundle-page .charmacy-bundle__hero-price{display:grid;justify-items:end;white-space:nowrap}
+  #charmacy-bundle-page .charmacy-bundle__hero-price small{opacity:.82}
+  #charmacy-bundle-page .charmacy-bundle__hero-price strong{font-size:34px;line-height:1.15}
+  #charmacy-bundle-page [data-regular-total]{min-height:18px;font-size:13px;opacity:.8}
+  #charmacy-bundle-page [data-saving]{margin-top:4px;padding:4px 8px;border-radius:4px;background:#fff;color:var(--wine);font-size:12px;font-style:normal;font-weight:800}
+  #charmacy-bundle-page .charmacy-bundle__products{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:18px;align-items:center;margin:22px 0}
+  #charmacy-bundle-page .charmacy-bundle__card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff}
+  #charmacy-bundle-page .charmacy-bundle__image{height:315px;padding:16px;background:#fcf7f9}
+  #charmacy-bundle-page .charmacy-bundle__image img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+  #charmacy-bundle-page .charmacy-bundle__copy{padding:22px}
+  #charmacy-bundle-page .charmacy-bundle__copy h2{margin:0;font-size:19px;line-height:1.35;font-weight:800}
+  #charmacy-bundle-page .charmacy-bundle__copy a{display:inline-block;margin:7px 0 19px;color:var(--wine);font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+  #charmacy-bundle-page .charmacy-bundle__shade-picker{margin-top:2px}
+  #charmacy-bundle-page .charmacy-bundle__shade-heading{display:flex;align-items:center;gap:4px;margin:0 0 13px;font-size:14px;font-weight:700}
+  #charmacy-bundle-page .charmacy-bundle__shade-heading:after{content:"";height:1px;flex:1;margin-left:8px;background:var(--line)}
+  #charmacy-bundle-page .charmacy-bundle__shade-heading strong{font-weight:800}
+  #charmacy-bundle-page .charmacy-bundle__swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+  #charmacy-bundle-page .charmacy-bundle__swatch{position:relative;display:flex;min-width:0;min-height:104px;padding:10px 4px 8px;align-items:center;flex-direction:column;justify-content:flex-start;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease}
+  #charmacy-bundle-page .charmacy-bundle__swatch:hover{border-color:#b9718d}
+  #charmacy-bundle-page .charmacy-bundle__swatch.is-selected{border:2px solid var(--wine);padding:9px 3px 7px}
+  #charmacy-bundle-page .charmacy-bundle__swatch-input{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  #charmacy-bundle-page .charmacy-bundle__swatch:has(.charmacy-bundle__swatch-input:focus-visible){outline:2px solid var(--wine);outline-offset:3px}
+  #charmacy-bundle-page .charmacy-bundle__swatch-colour{display:block;width:52px;height:52px;flex:0 0 52px;border:2px solid #fff;border-radius:50%;outline:1px solid #d7bfc9;background-color:#e6c8aa;background-size:cover;background-position:center}
+  #charmacy-bundle-page .charmacy-bundle__swatch.is-selected .charmacy-bundle__swatch-colour{outline:2px solid var(--wine);outline-offset:2px}
+  #charmacy-bundle-page .charmacy-bundle__swatch-name{display:block;width:100%;margin-top:9px;overflow:hidden;color:#241d20;font-size:11px;font-weight:800;letter-spacing:.6px;line-height:1.15;text-align:center;text-overflow:ellipsis;white-space:nowrap}
+  #charmacy-bundle-page .charmacy-bundle__swatch-sold{position:absolute;top:59px;left:0;right:0;color:#998f93;font-size:10px;line-height:1.15;text-align:center;text-decoration:line-through;text-transform:uppercase}
+  #charmacy-bundle-page .charmacy-bundle__swatch.is-sold-out{background:#f4f2f3;cursor:not-allowed;filter:grayscale(1);opacity:.75}
+  #charmacy-bundle-page .charmacy-bundle__swatch.is-sold-out .charmacy-bundle__swatch-name{margin-top:9px;color:#91878b;text-decoration:line-through}
+  #charmacy-bundle-page [data-variant-price]{display:block;margin-top:14px;color:var(--wine);font-size:18px}
+  #charmacy-bundle-page .charmacy-bundle__plus{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--rose);color:var(--wine);font-size:27px}
+  #charmacy-bundle-page .charmacy-bundle__checkout{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;border-radius:14px;background:var(--rose);color:var(--wine)}
+  #charmacy-bundle-page .charmacy-bundle__checkout div{display:grid;gap:3px;font-size:13px;font-weight:700}
+  #charmacy-bundle-page .charmacy-bundle__checkout strong{font-size:28px}
+  #charmacy-bundle-page button{min-height:50px;padding:12px 26px;border:0;border-radius:8px;background:var(--wine);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+  #charmacy-bundle-page button:hover{background:#4c102a}
+  #charmacy-bundle-page button:disabled{opacity:.55;cursor:not-allowed}
+  #charmacy-bundle-page button:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+  #charmacy-bundle-page .charmacy-bundle__status{min-height:22px;margin:12px 2px 0;font-size:14px}
+  @media(max-width:850px) and (min-width:641px){#charmacy-bundle-page .charmacy-bundle__swatches{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  @media(max-width:640px){#charmacy-bundle-page{width:calc(100% - 24px);margin:22px auto}#charmacy-bundle-page .charmacy-bundle__hero{display:grid;gap:15px;padding:21px}#charmacy-bundle-page .charmacy-bundle__hero-price{justify-items:start}#charmacy-bundle-page .charmacy-bundle__products{grid-template-columns:1fr;gap:10px}#charmacy-bundle-page .charmacy-bundle__plus{margin:0 auto}#charmacy-bundle-page .charmacy-bundle__image{height:270px}#charmacy-bundle-page .charmacy-bundle__swatches{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}#charmacy-bundle-page .charmacy-bundle__swatch{min-height:94px;padding:8px 2px 6px}#charmacy-bundle-page .charmacy-bundle__swatch.is-selected{padding:7px 1px 5px}#charmacy-bundle-page .charmacy-bundle__swatch-colour{width:43px;height:43px;flex-basis:43px}#charmacy-bundle-page .charmacy-bundle__swatch-name{margin-top:7px;font-size:9px;letter-spacing:.25px}#charmacy-bundle-page .charmacy-bundle__swatch-sold{top:51px;font-size:9px}#charmacy-bundle-page .charmacy-bundle__checkout{align-items:stretch;flex-direction:column}#charmacy-bundle-page button{width:100%}}
+  @media(max-width:380px){#charmacy-bundle-page .charmacy-bundle__swatches{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('charmacy-bundle-page');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = 'true';
+
+    const bundlePrice = {{ bundle_price | json }};
+    const format = {{ shop.money_with_currency_format | json }};
+    const selects = [...root.querySelectorAll('[data-variant-select]')];
+    const add = root.querySelector('[data-add-bundle]');
+    const status = root.querySelector('[data-status]');
+    let busy = false;
+
+    const money = cents => window.Shopify?.formatMoney
+      ? window.Shopify.formatMoney(cents, format)
+      : '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    function render() {
+      let total = 0;
+      let valid = selects.length === 2;
+      selects.forEach(select => {
+        const card = select.closest('[data-product-card]');
+        const available = select.dataset.available === 'true';
+        if (!select.value || !available) { valid = false; return; }
+        const comparePrice = Number(select.dataset.comparePrice || select.dataset.price || 0);
+        total += comparePrice;
+        card.querySelector('[data-variant-price]').textContent = money(comparePrice);
+        const image = card.querySelector('[data-product-image]');
+        if (image && select.dataset.image) {
+          image.src = select.dataset.image;
+          image.alt = `${card.querySelector('h2').textContent.trim()} — ${select.dataset.title}`;
+        }
+      });
+      root.querySelector('[data-regular-total]').textContent = total ? `Worth ${money(total)}` : '';
+      const saving = root.querySelector('[data-saving]');
+      const amount = total - bundlePrice;
+      saving.hidden = amount <= 0;
+      saving.textContent = amount > 0 ? `Save ${money(amount)}` : '';
+      add.disabled = busy || !valid;
+      add.textContent = busy ? 'Adding to cart…' : valid ? 'Add bundle to cart →' : 'Variant unavailable';
+    }
+
+    root.querySelectorAll('[data-swatch]').forEach(swatch => {
+      swatch.addEventListener('change', event => {
+        const input = event.currentTarget;
+        if (!input.checked || input.disabled) return;
+        const card = input.closest('[data-product-card]');
+        const select = card.querySelector('[data-variant-select]');
+        ['price', 'comparePrice', 'image', 'title', 'available'].forEach(key => select.dataset[key] = input.dataset[key] || '');
+        select.value = input.value;
+        card.querySelector('[data-selected-shade]').textContent = input.dataset.title;
+        card.querySelectorAll('.charmacy-bundle__swatch').forEach(item => item.classList.toggle('is-selected', item.contains(input)));
+        status.textContent = '';
+        render();
+      });
+    });
+
+    add.addEventListener('click', async event => {
+      event.preventDefault();
+      if (busy || add.disabled) return;
+      busy = true;
+      status.textContent = '';
+      render();
+      try {
+        const response = await fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: selects.map(select => ({ id: Number(select.value), quantity: 1 })) })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.description || result.message || 'Unable to add the bundle. Please try again.');
+        status.textContent = 'Your bundle has been added to the cart.';
+        document.dispatchEvent(new CustomEvent('cart:build'));
+        document.dispatchEvent(new CustomEvent('cart:item-added'));
+        document.querySelector('.js-drawer-open-cart')?.click();
+      } catch (error) {
+        status.textContent = error.message || 'Unable to add the bundle. Please try again.';
+      } finally {
+        busy = false;
+        render();
+      }
+    });
+    render();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Skin Tint + Glow Drip",
+  "settings": [],
+  "presets": [{ "name": "Skin Tint + Glow Drip", "category": "Collection" }]
+}
+{% endschema %}

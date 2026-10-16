@@ -1,0 +1,229 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/css/splide.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/js/splide.min.js"></script>
+<style>
+.hero-splide-container {
+    {% comment %} max-width: 1500px; {% endcomment %}
+    margin: 0 auto;
+    {% comment %} padding: 0 30px; {% endcomment %}
+    @media(max-width: 768px){
+        {% comment %} padding: 0 15px; {% endcomment %}
+    }
+}
+  #splide-banner {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+.hero-splide-container .splide__arrow {
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    font-size: 21px;
+    line-height: 1.5;
+    @media(max-width: 768px){
+        width: 35px;
+        height: 35px;
+    }
+}
+  .hero-splide .splide__slide a {
+    display: block;
+  }
+
+  .hero-splide .splide__slide picture img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .hero-splide .hero-splide__video {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .hero-splide .hero-splide__video--mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .hero-splide .splide__slide picture img {
+      object-fit: contain;
+    }
+
+    .hero-splide .hero-splide__video--desktop.has-mobile-video {
+      display: none;
+    }
+
+    .hero-splide .hero-splide__video--mobile {
+      display: block;
+    }
+  }
+</style>
+
+<div class="hero-splide-container">
+<div id="splide-banner-{{ section.id }}" class="splide hero-splide">
+  <div class="splide__track">
+    <ul class="splide__list">
+      {% for block in section.blocks %}
+        <li class="splide__slide">
+          <a href="{{ block.settings.link | default: '#' }}" {% if block.settings.link %}target="_blank"{% endif %}>
+            {% if block.settings.media_type == 'video' and block.settings.desktop_video != blank %}
+              {% assign desktop_video_class = 'hero-splide__video hero-splide__video--desktop' %}
+              {% if block.settings.mobile_video != blank %}
+                {% assign desktop_video_class = desktop_video_class | append: ' has-mobile-video' %}
+              {% endif %}
+              {{ block.settings.desktop_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, preload: 'metadata', class: desktop_video_class }}
+              {% if block.settings.mobile_video != blank %}
+                {{ block.settings.mobile_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, preload: 'metadata', class: 'hero-splide__video hero-splide__video--mobile' }}
+              {% endif %}
+            {% else %}
+              <picture>
+                {% if block.settings.desktop_image %}
+                  <source media="(min-width: 768px)" srcset="{{ block.settings.desktop_image | img_url: '2048x2048' }}">
+                {% endif %}
+                {% if block.settings.mobile_image %}
+                  <source media="(max-width: 767px)" srcset="{{ block.settings.mobile_image | img_url: '2048x2048' }}">
+                {% endif %}
+                <img
+                  src="{{ block.settings.desktop_image | img_url: '2048x2048' }}"
+                  alt="Slide {{ forloop.index }}"
+                  loading="lazy"
+                >
+              </picture>
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="splide__arrows">
+    <button class="splide__arrow splide__arrow--prev">‹</button>
+    <button class="splide__arrow splide__arrow--next">›</button>
+  </div>
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var slider = new Splide('#splide-banner-{{ section.id }}', {
+      type: '{{ section.settings.animation_type }}',
+      autoplay: true,
+      interval: {{ section.settings.autoplay_interval | default: 4 }} * 1000,
+      speed: {{ section.settings.transition_speed | default: 800 }},
+      pauseOnHover: true,
+      arrows: true,
+      pagination: true,
+      perPage: 1,
+      rewind: true
+    });
+
+    function syncActiveVideo() {
+      var activeSlide = document.querySelector('#splide-banner-{{ section.id }} .splide__slide.is-active');
+
+      document.querySelectorAll('#splide-banner-{{ section.id }} video').forEach(function(video) {
+        video.muted = true;
+        video.playsInline = true;
+
+        if (activeSlide && activeSlide.contains(video) && video.offsetParent !== null) {
+          var playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function() {});
+          }
+        } else {
+          video.pause();
+        }
+      });
+    }
+
+    slider.on('mounted moved', syncActiveVideo);
+    slider.mount();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slider Home",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Slide Animation",
+      "options": [
+        { "value": "fade", "label": "Fade" },
+        { "value": "slide", "label": "Slide" },
+        { "value": "loop", "label": "Loop Slide" }
+      ],
+      "default": "fade"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay Interval (seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Transition Speed (milliseconds)",
+      "min": 100,
+      "max": 2000,
+      "step": 100,
+      "default": 800
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Banner type",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "video",
+          "id": "desktop_video",
+          "label": "Desktop video"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Mobile video (optional)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider Home"
+    }
+  ]
+}
+{% endschema %}

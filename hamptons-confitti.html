@@ -1,0 +1,176 @@
+<!-- Party confetti overlay: add this once, near the end of <body>. -->
+<div class="hamptons-confetti" aria-hidden="true"></div>
+
+<style>
+  .hamptons-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hamptons-confetti__piece {
+    position: absolute;
+    top: -16vh;
+    bottom: auto;
+    left: var(--left);
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: hamptons-confetti-fall var(--duration) linear var(--delay) forwards;
+  }
+
+  .hamptons-confetti__piece::before {
+    content: '';
+    display: block;
+    width: var(--size);
+    height: calc(var(--size) * 0.7);
+    background:
+      radial-gradient(circle at 28% 20%, rgba(255, 255, 255, .98) 0 9%, transparent 30%),
+      linear-gradient(135deg, var(--shine) 0%, var(--color) 42%, var(--shade) 100%);
+    border-radius: 2px;
+    box-shadow: inset -1px -2px 2px rgba(0, 0, 0, .2), 1px 3px 4px rgba(0, 0, 0, .2);
+    animation: hamptons-confetti-tumble var(--tumble) ease-in-out var(--delay) forwards;
+    transform-style: preserve-3d;
+  }
+
+  .hamptons-confetti__piece--shiny::after {
+    content: '';
+    position: absolute;
+    inset: -35%;
+    background: linear-gradient(112deg, transparent 39%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, .95) 50%, rgba(255, 255, 255, .18) 56%, transparent 63%);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, .85));
+    opacity: 0;
+    transform: translateX(-70%) rotate(12deg);
+    animation: hamptons-confetti-shine 1.35s ease-in-out var(--delay) 2;
+    pointer-events: none;
+  }
+
+  .hamptons-confetti__piece--ribbon::before {
+    height: calc(var(--size) * 3.4);
+    border-radius: 999px;
+  }
+
+  .hamptons-confetti__piece--dot::before {
+    width: calc(var(--size) * 1.15);
+    height: calc(var(--size) * 1.15);
+    border-radius: 50%;
+  }
+
+  .hamptons-confetti__piece--star::before {
+    width: calc(var(--size) * 1.85);
+    height: calc(var(--size) * 1.85);
+    clip-path: polygon(50% 0%, 61% 34%, 98% 36%, 68% 57%, 79% 94%, 50% 72%, 21% 94%, 32% 57%, 2% 36%, 39% 34%);
+  }
+
+  .hamptons-confetti__piece--cube::before {
+    width: calc(var(--size) * 1.5);
+    height: calc(var(--size) * 1.5);
+    border-radius: 3px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-shadow: inset 4px -5px 5px rgba(0, 0, 0, .3), inset -3px 3px 4px rgba(255, 255, 255, .45), 2px 4px 5px rgba(0, 0, 0, .25);
+  }
+
+  .hamptons-confetti__piece--cube::after {
+    content: '';
+    position: absolute;
+    top: 9%;
+    left: 17%;
+    width: var(--size);
+    height: calc(var(--size) * .75);
+    background: rgba(255, 255, 255, .32);
+    clip-path: polygon(50% 0%, 100% 35%, 50% 65%, 0% 35%);
+    filter: blur(.2px);
+    pointer-events: none;
+  }
+
+  @keyframes hamptons-confetti-fall {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -5vh, 0);
+    }
+    6% { opacity: 1; }
+    45% {
+      transform: translate3d(var(--drift-one), 52vh, 0);
+    }
+    88% { opacity: 1; }
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--drift-two), 122vh, 0);
+    }
+  }
+
+  @keyframes hamptons-confetti-tumble {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(.6); }
+    20% { transform: rotateX(180deg) rotateY(115deg) rotateZ(170deg) scale(1); }
+    55% { transform: rotateX(440deg) rotateY(310deg) rotateZ(430deg) scale(.92); }
+    100% { transform: rotateX(var(--flip-x)) rotateY(var(--flip-y)) rotateZ(var(--flip-z)) scale(.72); }
+  }
+
+  @keyframes hamptons-confetti-shine {
+    15% { opacity: 0; }
+    34% { opacity: .95; }
+    56% { opacity: 0; transform: translateX(70%) rotate(12deg); }
+    100% { opacity: 0; transform: translateX(70%) rotate(12deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hamptons-confetti { display: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const wrapper = document.querySelector('.hamptons-confetti');
+    if (!wrapper || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const colors = [
+      { color: '#ffb703', shine: '#fff3a5', shade: '#d67000' },
+      { color: '#ff4d88', shine: '#ffc0d5', shade: '#ad1457' },
+      { color: '#26c6ff', shine: '#c8f4ff', shade: '#0077b6' },
+      { color: '#72d572', shine: '#d7ffd1', shade: '#208b3a' },
+      { color: '#9f72ff', shine: '#e0d3ff', shade: '#5231a4' },
+      { color: '#f8f9fa', shine: '#ffffff', shade: '#aeb8c2' }
+    ];
+
+    const createPiece = (delay = 0) => {
+      const piece = document.createElement('span');
+      const palette = colors[Math.floor(Math.random() * colors.length)];
+      const size = 10 + Math.random() * 12;
+      const shape = Math.random();
+      const shapeClass = shape > .86
+        ? ' hamptons-confetti__piece--ribbon'
+        : shape > .68
+          ? ' hamptons-confetti__piece--star'
+          : shape > .52
+            ? ' hamptons-confetti__piece--dot'
+            : shape > .36
+              ? ' hamptons-confetti__piece--cube'
+              : '';
+      const isShiny = shape < .36 && Math.random() > 0.68;
+      piece.className = `hamptons-confetti__piece${shapeClass}${isShiny ? ' hamptons-confetti__piece--shiny' : ''}`;
+      piece.style.setProperty('--left', `${Math.random() * 100}%`);
+      piece.style.setProperty('--size', `${size}px`);
+      piece.style.setProperty('--color', palette.color);
+      piece.style.setProperty('--shine', palette.shine);
+      piece.style.setProperty('--shade', palette.shade);
+      piece.style.setProperty('--duration', `${3.6 + Math.random() * 2.2}s`);
+      piece.style.setProperty('--tumble', `${1.1 + Math.random() * 1.2}s`);
+      piece.style.setProperty('--delay', `${delay}s`);
+      piece.style.setProperty('--drift-one', `${-110 + Math.random() * 220}px`);
+      piece.style.setProperty('--drift-two', `${-170 + Math.random() * 340}px`);
+      piece.style.setProperty('--flip-x', `${720 + Math.random() * 1080}deg`);
+      piece.style.setProperty('--flip-y', `${540 + Math.random() * 900}deg`);
+      piece.style.setProperty('--flip-z', `${720 + Math.random() * 1080}deg`);
+      wrapper.appendChild(piece);
+      piece.addEventListener('animationend', (event) => {
+        if (event.animationName !== 'hamptons-confetti-fall') return;
+        piece.remove();
+        if (!wrapper.childElementCount) wrapper.remove();
+      });
+    };
+
+    // One natural opening shower. The overlay clears itself after the last piece falls away.
+    for (let index = 0; index < 115; index += 1) createPiece(Math.random() * 1.25);
+  })();
+</script>

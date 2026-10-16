@@ -8,7 +8,7 @@
 
   .wrapper-timer h2  {
     margin: 0 0 8px;
-    color: #bea236;
+    color: #0f1c2a;
     font-size: 20px;
     line-height: 1.2;
     font-family: "Jost", sans-serif;
@@ -39,12 +39,12 @@
   }
 
   .flipdown.flipdown__theme-dark .rotor-group-heading:before {
-    color: #bea236;
+    color: #0f1c2a;
   }
 
   .flipdown.flipdown__theme-dark .rotor-group:nth-child(n + 2):nth-child(-n + 3):before,
   .flipdown.flipdown__theme-dark .rotor-group:nth-child(n + 2):nth-child(-n + 3):after {
-    background-color: #bea236;
+    background-color: #0f1c2a;
   }
 
   .flipdown.flipdown__theme-dark .rotor,
@@ -53,7 +53,7 @@
   .flipdown.flipdown__theme-dark .rotor-bottom,
   .flipdown.flipdown__theme-dark .rotor-leaf-rear {
     color: #fff;
-    background-color: #bea236;
+    background-color: #0f1c2a;
   }
 
   .flipdown.flipdown__theme-dark .rotor:after {
@@ -282,17 +282,17 @@
       return;
     }
 
-    var targetDate = new Date("july 16, 2026 23:59:59").getTime();
+    var targetDate = new Date("Dec 31, 2026 23:59:59").getTime();
 
     if (targetDate <= Date.now()) {
-      flipdownElement.innerHTML = "<p style='margin:0; color:#fff; background:#bea236; padding:8px 12px; border-radius:6px; font-weight:600;'>Sale ended</p>";
+      flipdownElement.innerHTML = "<p style='margin:0; color:#fff; background:#0f1c2a; padding:8px 12px; border-radius:6px; font-weight:600;'>Sale ended</p>";
       return;
     }
 
     new FlipDown(Math.floor(targetDate / 1000), "flipdown")
       .start()
       .ifEnded(function () {
-        flipdownElement.innerHTML = "<p style='margin:0; color:#fff; background:#bea236; padding:8px 12px; border-radius:6px; font-weight:600;'>Sale ended</p>";
+        flipdownElement.innerHTML = "<p style='margin:0; color:#fff; background:#0f1c2a; padding:8px 12px; border-radius:6px; font-weight:600;'>Sale ended</p>";
       });
   });
 </script>

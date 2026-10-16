@@ -250,6 +250,10 @@
             mode: "price",
             currentPrice: 1000,
             currentQuantity: 3,
+            completedMessages: {
+                en: "<strong>Maximum discount unlocked!</strong>",
+                es: "<strong>¡Descuento máximo desbloqueado!</strong>"
+            },
             milestones: {
                 price: [
                     {
@@ -297,6 +301,19 @@
             return safeQuantity + " item" + (safeQuantity === 1 ? "" : "s");
         }
 
+        function getStoreLanguage() {
+            return (document.documentElement.lang || navigator.language || "en")
+                .toLowerCase()
+                .split("-")[0];
+        }
+
+        function getCompletedMessage(config) {
+            const messages = (config && config.completedMessages) || {};
+            const language = getStoreLanguage();
+
+            return messages[language] || messages.en || "";
+        }
+
         function getProgressSettings(config) {
             const mode = config && config.mode === "quantity" ? "quantity" : "price";
             const allMilestones = (config && config.milestones) || {};
@@ -308,6 +325,7 @@
                 currentPrice: currentPrice,
                 currentQuantity: currentQuantity,
                 currentValue: mode === "quantity" ? currentQuantity : currentPrice,
+                completedMessage: getCompletedMessage(config),
                 milestones: milestones
             };
         }
@@ -385,7 +403,7 @@
             });
 
             if (!nextMilestone) {
-                message.innerHTML = "You have unlocked <strong>all milestone rewards</strong> for this order.";
+                message.innerHTML = progressSettings.completedMessage;
                 return;
             }
 

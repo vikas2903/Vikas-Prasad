@@ -1,0 +1,110 @@
+<style>
+    .announcement-bar-div {
+        width: 100%;
+        overflow: hidden;
+
+        background: var(--gradient-background);
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    .announcement-content-div {
+        white-space: nowrap;
+        animation: scroll 20s linear infinite;
+    }
+
+    .announcement-bar-div:hover .announcement-content-div {
+        animation-play-state: paused;
+    }
+
+    .announcement-content-div {
+        display: flex;
+        gap: 26px;
+        line-height: 1;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .announcement-content-div span {
+        font-family: 'Assistant';
+        font-weight: 600;
+    }
+
+    @media only screen and (max-width: 400px) {
+        .announcement-content-div {
+            animation: scroll 12s linear infinite;
+        }
+    }
+</style>
+
+<style>
+    .announcement-bar-div {
+        width: 100%;
+        overflow: hidden;
+        background: #c4a96a;
+        color: #fff;
+        padding: 10px 0;
+    }
+
+    .announcement-content-div {
+        display: flex;
+        gap: 26px;
+        white-space: nowrap;
+        line-height: 1;
+        animation: scroll 20s linear infinite;
+    }
+
+    .announcement-bar-div:hover .announcement-content-div {
+        animation-play-state: paused;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    @media only screen and (max-width: 400px) {
+        .announcement-content-div {
+            animation-duration: 12s;
+        }
+    }
+</style>
+
+<div class="announcement-bar-div">
+    <div class="announcement-content-div">
+        {% for i in (1..5) %}
+        
+        <span>BUY ANY PRODUCT & GET 20% OFF</span>
+        <span>✦</span>
+
+        <span>BUY ANY PRODUCT 3 & GET 25% OFF </span>
+        <span>✦</span>
+
+        <span>BUY ANY 6 & GET A FREE MYSTERY BOX WORTH ₹999! </span>
+        <span>✦</span>
+
+        <span>BUY ANY PRODUCT & GET 20% OFF</span>
+        <span>✦</span>
+
+        <span>BUY ANY PRODUCT 3 & GET 25% OFF </span>
+        <span>✦</span>
+
+        <span>BUY ANY 6 & GET A FREE MYSTERY BOX WORTH ₹999! </span>
+        <span>✦</span>
+
+        {% endfor %}
+    </div>
+</div>
