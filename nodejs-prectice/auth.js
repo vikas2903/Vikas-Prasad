@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 
 
 AuthApp.use(express.json());
+
 async function runauthServer() {
     try {
         await connectDB();
@@ -28,6 +29,9 @@ async function runauthServer() {
 
 runauthServer();
 AuthApp.use("/api", AuthRoute);
+
+
+
 
 AuthApp.listen(PORT, () => {
     console.log(`Auth Server is running on port ${PORT}`);
