@@ -1,0 +1,234 @@
+{% liquid
+  assign section_id = 'richrover-happy-customers-' | append: section.id
+%}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+
+<section id="{{ section_id }}" class="richrover-happy-customers">
+  <div class="richrover-happy-customers__inner">
+    <header class="richrover-happy-customers__header">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.review_summary != blank %}
+        <p>{{ section.settings.review_summary | escape }}</p>
+      {% endif %}
+    </header>
+
+    {% if section.blocks.size > 0 %}
+      <div class="richrover-happy-customers__slider" aria-label="Customer reviews">
+        {% for block in section.blocks %}
+          {% liquid
+            assign product_url = block.settings.product.url
+            if product_url == blank
+              assign product_url = block.settings.product_url
+            endif
+          %}
+          <article class="richrover-happy-customers__card" {{ block.shopify_attributes }}>
+            <div class="richrover-happy-customers__image-wrap">
+              {% if block.settings.customer_image != blank %}
+                {{ block.settings.customer_image | image_url: width: 900 | image_tag: class: 'richrover-happy-customers__image', loading: 'lazy', widths: '320, 480, 640, 900', alt: block.settings.customer_name }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'richrover-happy-customers__placeholder' }}
+              {% endif %}
+            </div>
+
+            {% if block.settings.show_button and product_url != blank %}
+              <a class="richrover-happy-customers__shop-link" href="{{ product_url }}" aria-label="Shop the product reviewed by {{ block.settings.customer_name | escape }}">
+                <span>{{ block.settings.button_label | escape }}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+              </a>
+            {% endif %}
+
+            <div class="richrover-happy-customers__body{% if block.settings.customer_name == blank %} richrover-happy-customers__body--no-name{% endif %}{% if block.settings.review == blank %} richrover-happy-customers__body--no-review{% endif %}">
+              <div class="richrover-happy-customers__rating" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+                {% for star in (1..5) %}
+                  <span class="{% if star > block.settings.rating %}is-empty{% endif %}">&#9733;</span>
+                {% endfor %}
+              </div>
+              {% if block.settings.customer_name != blank %}
+                <h3>{{ block.settings.customer_name | escape }}</h3>
+              {% endif %}
+              {% if block.settings.review != blank %}
+                <p>{{ block.settings.review | escape | newline_to_br }}</p>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="richrover-happy-customers__empty">Add customer review blocks to display this slider.</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    --rr-bg: {{ section.settings.background }};
+    --rr-text: {{ section.settings.text_color }};
+    --rr-accent: {{ section.settings.accent_color }};
+    background: var(--rr-bg);
+    color: var(--rr-text);
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+  #{{ section_id }} * { box-sizing: border-box; }
+  #{{ section_id }} .richrover-happy-customers__inner { width: min(100%, {{ section.settings.max_width }}px); margin: 0 auto; }
+  #{{ section_id }} .richrover-happy-customers__header { margin: 0 0 34px; text-align: center; }
+  #{{ section_id }} .richrover-happy-customers__header h2 { margin: 0; color: var(--rr-text); font-size: clamp(28px, 3vw, 44px); font-weight: 700; letter-spacing: -.03em; line-height: 1.12; }
+  #{{ section_id }} .richrover-happy-customers__header p { margin: 9px 0 0; font-size: clamp(14px, 1.25vw, 17px); font-weight: 600; line-height: 1.4; }
+  #{{ section_id }} .richrover-happy-customers__slider { margin: 0 -12px; }
+  #{{ section_id }} .richrover-happy-customers__slider:not(.slick-initialized) { display: flex; overflow: hidden; }
+  #{{ section_id }} .richrover-happy-customers__slider:not(.slick-initialized) .richrover-happy-customers__card { min-width: 25%; }
+  #{{ section_id }} .slick-list { margin: 0; padding: 8px 0 20px; }
+  #{{ section_id }} .slick-slide { height: inherit; padding: 0 12px; }
+  #{{ section_id }} .slick-track { display: flex !important; }
+  #{{ section_id }} .slick-slide > div, #{{ section_id }} .richrover-happy-customers__card { height: 100%; }
+  #{{ section_id }} .richrover-happy-customers__card { position: relative; display: flex !important; flex-direction: column; height: 510px; overflow: hidden; border-radius: 9px; background: #fff; box-shadow: 0 4px 15px rgba(17,17,17,.10); }
+  #{{ section_id }} .richrover-happy-customers__image-wrap { position: relative; flex: 0 0 305px; height: 305px; overflow: hidden; background: #ededed; }
+  #{{ section_id }} .richrover-happy-customers__image, #{{ section_id }} .richrover-happy-customers__placeholder { display: block; width: 100%; height: 100%; object-fit: cover; }
+  #{{ section_id }} .richrover-happy-customers__placeholder { padding: 24px; color: #bbb; }
+  #{{ section_id }} .richrover-happy-customers__shop-link { display: flex; align-items: center; justify-content: space-between; min-height: 46px; padding: 12px 17px; background: var(--rr-accent); color: #fff; font-size: 14px; font-weight: 700; line-height: 1; text-decoration: none; transition: filter .2s ease; }
+  #{{ section_id }} .richrover-happy-customers__shop-link:hover { filter: brightness(.88); }
+  #{{ section_id }} .richrover-happy-customers__shop-link:focus-visible { outline: 3px solid var(--rr-text); outline-offset: -3px; }
+  #{{ section_id }} .richrover-happy-customers__shop-link svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+  #{{ section_id }} .richrover-happy-customers__body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; padding: 14px 20px 18px; color: #272727; text-align: center; }
+  #{{ section_id }} .richrover-happy-customers__rating { display: flex; align-items: center; justify-content: center; align-self: center; min-width: 136px; margin: 0 auto 11px; padding: 7px 13px; border-radius: 999px; background: #fff; box-shadow: 0 4px 11px rgba(0,0,0,.12); color: #ff9900; font-size: 21px; letter-spacing: 1px; line-height: 1; }
+  #{{ section_id }} .richrover-happy-customers__rating .is-empty { color: #d7d7d7; }
+  #{{ section_id }} .richrover-happy-customers__body h3 { display: -webkit-box; min-height: 25px; margin: 0 0 7px; overflow: hidden; color: #303030; font-size: 20px; font-weight: 700; line-height: 1.25; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  #{{ section_id }} .richrover-happy-customers__body p { display: -webkit-box; margin: 0; overflow: hidden; color: #3c3c3c; font-size: 15px; line-height: 1.48; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  #{{ section_id }} .richrover-happy-customers__body--no-name { padding-top: 14px; }
+  #{{ section_id }} .richrover-happy-customers__body--no-review h3 { margin-bottom: 0; }
+  #{{ section_id }} .richrover-happy-customers__body--no-name.richrover-happy-customers__body--no-review { min-height: 0; }
+  #{{ section_id }} .slick-arrow { position: absolute; z-index: 2; top: 39%; display: grid; width: 50px; height: 50px; place-items: center; border: 0; border-radius: 50%; background: #fff; color: #333; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.18); font-size: 0; transform: translateY(-50%); }
+  #{{ section_id }} .slick-arrow::before { font-family: Arial, sans-serif; font-size: 38px; font-weight: 300; line-height: 1; opacity: 1; }
+  #{{ section_id }} .slick-prev { left: -14px; }
+  #{{ section_id }} .slick-next { right: -14px; }
+  #{{ section_id }} .slick-prev::before { content: '\2039'; }
+  #{{ section_id }} .slick-next::before { content: '\203A'; }
+  #{{ section_id }} .slick-arrow:focus-visible { outline: 3px solid var(--rr-accent); outline-offset: 2px; }
+  #{{ section_id }} .slick-dots { display: flex; justify-content: center; gap: 7px; margin: 4px 0 0; padding: 0; list-style: none; }
+  #{{ section_id }} .slick-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #b5b5b5; color: transparent; cursor: pointer; font-size: 0; }
+  #{{ section_id }} .slick-dots .slick-active button { width: 22px; border-radius: 8px; background: var(--rr-accent); }
+  #{{ section_id }} .richrover-happy-customers__empty { margin: 0; text-align: center; }
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .richrover-happy-customers__slider:not(.slick-initialized) .richrover-happy-customers__card { min-width: 50%; }
+    #{{ section_id }} .richrover-happy-customers__card { height: 530px; }
+    #{{ section_id }} .richrover-happy-customers__image-wrap { flex-basis: 325px; height: 325px; }
+  }
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} { padding: {{ section.settings.padding_top | at_most: 48 }}px 14px {{ section.settings.padding_bottom | at_most: 48 }}px; }
+    #{{ section_id }} .richrover-happy-customers__header { margin-bottom: 23px; }
+    #{{ section_id }} .richrover-happy-customers__slider { margin: 0 -7px; }
+    #{{ section_id }} .richrover-happy-customers__slider:not(.slick-initialized) .richrover-happy-customers__card { min-width: 66.666%; }
+    #{{ section_id }} .slick-slide { padding: 0 7px; }
+    #{{ section_id }} .richrover-happy-customers__card { height: 525px; }
+    #{{ section_id }} .richrover-happy-customers__image-wrap { flex-basis: min(70vw, 340px); height: min(70vw, 340px); }
+    #{{ section_id }} .richrover-happy-customers__body { padding: 13px 18px 17px; }
+    #{{ section_id }} .richrover-happy-customers__body p { font-size: 15px; }
+    #{{ section_id }} .slick-arrow { width: 40px; height: 40px; }
+    #{{ section_id }} .slick-arrow::before { font-size: 32px; }
+    #{{ section_id }} .slick-prev { left: -4px; }
+    #{{ section_id }} .slick-next { right: -4px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var section = document.getElementById('{{ section_id }}');
+    if (!section) return;
+    var slider = section.querySelector('.richrover-happy-customers__slider');
+    if (!slider || slider.classList.contains('slick-initialized')) return;
+
+    function initialiseSlick() {
+      if (!window.jQuery || !window.jQuery.fn || !window.jQuery.fn.slick) return;
+      var $slider = window.jQuery(slider);
+      if ($slider.hasClass('slick-initialized')) return;
+      $slider.slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: true,
+        infinite: {{ section.blocks.size }} > 4,
+        speed: 500,
+        adaptiveHeight: false,
+        prevArrow: '<button type="button" class="slick-prev" aria-label="Previous customer review"></button>',
+        nextArrow: '<button type="button" class="slick-next" aria-label="Next customer review"></button>',
+        responsive: [
+          { breakpoint: 990, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+          { breakpoint: 750, settings: { slidesToShow: 1.5, slidesToScroll: 1, arrows: false } }
+        ]
+      });
+    }
+
+    function loadSlick() {
+      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.slick) {
+        initialiseSlick();
+        return;
+      }
+      var existing = document.querySelector('script[data-richrover-slick]');
+      if (existing) {
+        existing.addEventListener('load', initialiseSlick);
+        return;
+      }
+      if (!window.jQuery) {
+        var jquery = document.createElement('script');
+        jquery.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+        jquery.onload = loadSlick;
+        document.head.appendChild(jquery);
+        return;
+      }
+      var slick = document.createElement('script');
+      slick.src = 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js';
+      slick.dataset.richroverSlick = 'true';
+      slick.onload = initialiseSlick;
+      document.head.appendChild(slick);
+    }
+
+    loadSlick();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Richrover happy customers",
+  "tag": "section",
+  "class": "section-richrover-happy-customers",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our customers love us" },
+    { "type": "text", "id": "review_summary", "label": "Review summary", "default": "4.8 star based on 13,509 reviews" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f8f8f8" },
+    { "type": "color", "id": "text_color", "label": "Heading color", "default": "#1f2e43" },
+    { "type": "color", "id": "accent_color", "label": "Button color", "default": "#92232d" },
+    { "type": "range", "id": "max_width", "label": "Maximum width", "min": 900, "max": 1800, "step": 20, "default": 1700, "unit": "px" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 100, "step": 4, "default": 32, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 100, "step": 4, "default": 32, "unit": "px" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer review",
+      "settings": [
+        { "type": "image_picker", "id": "customer_image", "label": "Customer image" },
+        { "type": "text", "id": "customer_name", "label": "Customer name", "default": "Customer name" },
+        { "type": "textarea", "id": "review", "label": "Short review", "default": "Great quality and exactly as expected. I love my purchase!" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "checkbox", "id": "show_button", "label": "Show product button", "default": true },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "product", "id": "product", "label": "Product page" },
+        { "type": "url", "id": "product_url", "label": "Product URL fallback", "info": "Used only when a product is not selected above." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Richrover happy customers",
+      "blocks": [
+        { "type": "review", "settings": { "customer_name": "Aarav S.", "review": "The fabric feels premium and the fit is perfect. Highly recommended!" } },
+        { "type": "review", "settings": { "customer_name": "Rohan K.", "review": "Excellent quality, lovely colour, and fast delivery." } },
+        { "type": "review", "settings": { "customer_name": "Vikram P.", "review": "Comfortable, stylish and exactly as shown in the pictures." } },
+        { "type": "review", "settings": { "customer_name": "Kabir M.", "review": "A very good purchase. The material and finishing are impressive." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

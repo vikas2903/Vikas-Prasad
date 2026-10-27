@@ -1,0 +1,226 @@
+
+<style>
+  #cart-progress-container1 {
+    --gold: #c6a56b;
+    --gold-dark: #9f7b42;
+    --gold-light: #f6f0e5;
+
+    background: #fbf8f2;
+    border: 1px solid #eadfcf;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #cart-progress-container1 .offer-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+  }
+
+  #cart-progress-container1 .offer-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+  }
+
+  #cart-progress-container1 .offer-badge {
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    line-height: 1.2;
+  }
+
+  #progress-messagee1 {
+    font-size: 12px;
+    color: #766447;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 4px 0 14px;
+  }
+
+  #progress-messagee1 strong {
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+
+  #cart-progress-container1 .pro-wrap {
+    width: calc(100% - 24px);
+    height: 5px;
+    background: #e9dfcf;
+    border-radius: 20px;
+    position: relative;
+    margin: 0 auto 10px;
+  }
+
+  #cart-progress-bar1 {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      #a78246,
+      #d9ba82
+    );
+    border-radius: 20px;
+    transition: width .35s ease;
+  }
+
+  #cart-progress-container1 .step {
+    position: absolute;
+    top: 50%;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+  }
+
+  #cart-progress-container1 .step-1 {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #cart-progress-container1 .step-2 {
+    right: -11px;
+  }
+
+  #cart-progress-container1 .step svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--gold-dark);
+    fill: none;
+  }
+
+  #cart-progress-container1 .step-complete {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  #cart-progress-container1 .step-complete svg {
+    stroke: #fff;
+  }
+
+  #cart-progress-container1 .offer-success {
+    color: #418257 !important;
+  }
+
+  @media (max-width: 768px) {
+    #cart-progress-container1 {
+      padding: 10px 12px;
+      margin: 6px 0;
+      border-radius: 8px;
+    }
+
+    #cart-progress-container1 .offer-label {
+      font-size: 9px;
+    }
+
+    #cart-progress-container1 .offer-badge {
+      font-size: 10px;
+      padding: 4px 7px;
+    }
+
+    #progress-messagee1 {
+      font-size: 11px;
+      margin-bottom: 13px;
+    }
+
+    #cart-progress-container1 .step {
+      width: 21px;
+      height: 21px;
+    }
+  }
+</style>
+
+{% if cart.item_count > 0 %}
+
+  {% assign target_items = 2 %}
+  {% assign progress_width = 0 %}
+
+  {% if cart.item_count >= target_items %}
+    {% assign progress_width = 100 %}
+  {% elsif cart.item_count == 1 %}
+    {% assign progress_width = 50 %}
+  {% endif %}
+
+  <div id="cart-progress-container1">
+
+    <div class="offer-heading">
+      <span class="offer-label">✦ Exclusive Offer</span>
+      <span class="offer-badge">BUY 1 GET 1 FREE</span>
+    </div>
+
+    <p id="progress-messagee1"
+      {% if cart.item_count >= 2 %}
+        class="offer-success"
+      {% endif %}>
+
+      {% if cart.item_count >= 2 %}
+        🎉 Congratulations! Your BOGO offer is unlocked!
+      {% else %}
+        Add <strong>1 more item</strong> to get
+        <strong>1 FREE!</strong>
+      {% endif %}
+
+    </p>
+
+    <div class="pro-wrap">
+
+      <div
+        id="cart-progress-bar1"
+        style="width: {{ progress_width }}%;">
+      </div>
+
+      <span class="step step-1
+        {% if cart.item_count >= 1 %}
+          step-complete
+        {% endif %}">
+
+        <svg viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M5 12l4 4L19 6"/>
+        </svg>
+
+      </span>
+
+      <span class="step step-2
+        {% if cart.item_count >= 2 %}
+          step-complete
+        {% endif %}">
+
+        <svg viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="13" rx="2"/>
+          <path d="M12 8v13M3 12h18"/>
+          <path d="M9 8a3 3 0 1 1 3-3"/>
+          <path d="M15 8a3 3 0 1 0-3-3"/>
+        </svg>
+
+      </span>
+
+    </div>
+
+  </div>
+
+{% endif %}

@@ -1,0 +1,165 @@
+<!-- Festive blinking light string: add where the decoration should appear. -->
+<div class="ff-festive-lights" aria-hidden="true">
+  <div class="ff-festive-lights__scaler">
+    <svg class="ff-festive-lights__wire" viewBox="0 0 1440 82" preserveAspectRatio="none" focusable="false">
+    <path d="M0 17 Q40 53 80 17 Q120 53 160 17 Q200 53 240 17 Q280 53 320 17 Q360 53 400 17 Q440 53 480 17 Q520 53 560 17 Q600 53 640 17 Q680 53 720 17 Q760 53 800 17 Q840 53 880 17 Q920 53 960 17 Q1000 53 1040 17 Q1080 53 1120 17 Q1160 53 1200 17 Q1240 53 1280 17 Q1320 53 1360 17 Q1400 53 1440 17" />
+    </svg>
+
+  <span class="ff-bulb ff-bulb--red" style="--x:2.8%; --wire-y:30px; --drop:7px; --delay:-.2s"></span>
+  <span class="ff-bulb ff-bulb--gold" style="--x:6.4%; --wire-y:23px; --drop:9px; --delay:-1.1s"></span>
+  <span class="ff-bulb ff-bulb--blue" style="--x:10.2%; --wire-y:15px; --drop:10px; --delay:-.5s"></span>
+  <span class="ff-bulb ff-bulb--green" style="--x:14.6%; --wire-y:33px; --drop:8px; --delay:-1.5s"></span>
+  <span class="ff-bulb ff-bulb--pink" style="--x:18.8%; --wire-y:30px; --drop:6px; --delay:-.8s"></span>
+  <span class="ff-bulb ff-bulb--gold" style="--x:23.4%; --wire-y:25px; --drop:8px; --delay:-1.8s"></span>
+  <span class="ff-bulb ff-bulb--red" style="--x:27.9%; --wire-y:16px; --drop:10px; --delay:-.3s"></span>
+  <span class="ff-bulb ff-bulb--blue" style="--x:32.5%; --wire-y:21px; --drop:9px; --delay:-1.3s"></span>
+  <span class="ff-bulb ff-bulb--green" style="--x:36.8%; --wire-y:33px; --drop:6px; --delay:-.6s"></span>
+  <span class="ff-bulb ff-bulb--pink" style="--x:41.4%; --wire-y:34px; --drop:8px; --delay:-1.6s"></span>
+  <span class="ff-bulb ff-bulb--gold" style="--x:46.0%; --wire-y:28px; --drop:10px; --delay:-.1s"></span>
+  <span class="ff-bulb ff-bulb--red" style="--x:50.5%; --wire-y:20px; --drop:8px; --delay:-1.2s"></span>
+  <span class="ff-bulb ff-bulb--blue" style="--x:54.8%; --wire-y:21px; --drop:6px; --delay:-.7s"></span>
+  <span class="ff-bulb ff-bulb--green" style="--x:59.2%; --wire-y:33px; --drop:8px; --delay:-1.7s"></span>
+  <span class="ff-bulb ff-bulb--pink" style="--x:63.7%; --wire-y:34px; --drop:10px; --delay:-.4s"></span>
+  <span class="ff-bulb ff-bulb--gold" style="--x:68.1%; --wire-y:28px; --drop:7px; --delay:-1.4s"></span>
+  <span class="ff-bulb ff-bulb--red" style="--x:72.7%; --wire-y:20px; --drop:9px; --delay:-.9s"></span>
+  <span class="ff-bulb ff-bulb--blue" style="--x:77.1%; --wire-y:20px; --drop:7px; --delay:-1.9s"></span>
+  <span class="ff-bulb ff-bulb--green" style="--x:81.6%; --wire-y:32px; --drop:9px; --delay:-.2s"></span>
+  <span class="ff-bulb ff-bulb--pink" style="--x:86.0%; --wire-y:35px; --drop:6px; --delay:-1.1s"></span>
+  <span class="ff-bulb ff-bulb--gold" style="--x:90.5%; --wire-y:29px; --drop:8px; --delay:-.5s"></span>
+  <span class="ff-bulb ff-bulb--red" style="--x:94.8%; --wire-y:18px; --drop:9px; --delay:-1.5s"></span>
+    <span class="ff-bulb ff-bulb--blue" style="--x:98.0%; --wire-y:33px; --drop:7px; --delay:-.8s"></span>
+  </div>
+</div>
+
+<style>
+  .ff-festive-lights {
+    position: relative;
+    width: 100%;
+    height: clamp(76px, 7vw, 100px);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ff-festive-lights__wire {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 70px;
+    overflow: visible;
+  }
+
+  .ff-festive-lights__scaler {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top center;
+  }
+
+  .ff-festive-lights__wire path {
+    fill: none;
+    stroke: #31231d;
+    stroke-linecap: round;
+    stroke-width: 2.2;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .7));
+  }
+
+  .ff-bulb {
+    position: absolute;
+    top: var(--wire-y);
+    left: var(--x);
+    width: clamp(10px, 1.15vw, 15px);
+    height: calc(var(--drop) + clamp(19px, 2vw, 25px));
+    background: linear-gradient(90deg, transparent 0 41%, #281d18 42% 58%, transparent 59% 100%) center top / 100% calc(var(--drop) + 4px) no-repeat;
+    transform: translateX(-50%);
+  }
+
+  .ff-bulb::before {
+    position: absolute;
+    top: var(--drop);
+    left: 50%;
+    width: 8px;
+    height: 7px;
+    border: 1px solid #201713;
+    border-radius: 2px 2px 1px 1px;
+    background: linear-gradient(90deg, #251a15, #594238 45%, #251a15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    content: '';
+    transform: translateX(-50%);
+  }
+
+  .ff-bulb::after {
+    position: absolute;
+    top: calc(var(--drop) + 6px);
+    right: 0;
+    left: 0;
+    height: clamp(14px, 1.7vw, 21px);
+    border: 1px solid rgba(45, 30, 24, .38);
+    border-radius: 48% 48% 46% 46% / 43% 43% 56% 56%;
+    background:
+      radial-gradient(circle at 31% 22%, rgba(255, 255, 255, .96) 0 7%, rgba(255, 255, 255, .22) 15%, transparent 24%),
+      linear-gradient(108deg, #fff8ff 0 4%, var(--bulb-color) 26%, var(--bulb-color) 54%, var(--bulb-edge) 100%);
+    box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .56), inset -3px -4px 4px rgba(31, 15, 18, .22), 0 2px 3px rgba(38, 24, 19, .22);
+    content: '';
+    opacity: .42;
+    transform: scale(.82);
+    animation: ff-bulb-twinkle var(--speed, 1.9s) ease-in-out var(--delay) infinite alternate;
+    will-change: opacity, transform, box-shadow;
+  }
+
+  .ff-bulb--red { --bulb-color: #ff7189; --bulb-edge: #de294e; --glow: rgba(255, 61, 96, .88); --speed: 1.65s; }
+  .ff-bulb--gold { --bulb-color: #ffe06a; --bulb-edge: #ecaa1e; --glow: rgba(255, 196, 36, .9); --speed: 2.05s; }
+  .ff-bulb--blue { --bulb-color: #72d1ff; --bulb-edge: #1688d8; --glow: rgba(50, 176, 255, .85); --speed: 1.85s; }
+  .ff-bulb--green { --bulb-color: #78eaa4; --bulb-edge: #1fa95e; --glow: rgba(65, 216, 127, .88); --speed: 2.2s; }
+  .ff-bulb--pink { --bulb-color: #f69ced; --bulb-edge: #cf4fc1; --glow: rgba(241, 97, 221, .86); --speed: 1.75s; }
+
+  @keyframes ff-bulb-twinkle {
+    0%, 28% {
+      opacity: .5;
+      transform: scale(.86);
+      box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .48), inset -3px -4px 4px rgba(31, 15, 18, .25), 0 2px 3px rgba(38, 24, 19, .2);
+    }
+    54%, 100% {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .72), inset -3px -4px 4px rgba(31, 15, 18, .16), 0 0 4px 1px var(--glow), 0 0 9px 2px var(--glow);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ff-festive-lights { height: 60px; }
+    .ff-festive-lights__scaler {
+      inset: 0 auto auto 0;
+      width: 132%;
+      height: 78px;
+      margin-left: -16%;
+      transform: scale(.76);
+    }
+
+    .ff-festive-lights__wire { height: 70px; }
+    .ff-bulb {
+      width: 12px;
+      height: calc(var(--drop) + 21px);
+    }
+
+    .ff-bulb::before {
+      width: 8px;
+      height: 6px;
+    }
+
+    .ff-bulb::after {
+      height: 16px;
+      animation-duration: 2.6s;
+    }
+
+    .ff-bulb:nth-of-type(2n) { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ff-bulb::after {
+      opacity: .92;
+      transform: scale(1);
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,217 @@
+{% capture offer_callout_icon %}<span class="promotion-icon" aria-hidden="true">✦</span>{% endcapture %}
+
+<style>
+  .hamptons-discount-offer {
+    --offer-maroon: #761c35;
+    --offer-maroon-deep: #4c1023;
+    --offer-maroon-light: #a63b56;
+    --offer-surface: #fffafb;
+    --offer-border: #d99aa9;
+    --offer-ink: #491729;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--offer-border);
+    border-radius: 14px;
+    background: var(--offer-surface);
+    box-shadow: 0 8px 22px rgba(92, 23, 43, .12);
+    color: var(--offer-ink);
+  }
+
+  .hamptons-discount-offer::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--offer-maroon), #c5667d 28%, #f5d7df 50%, #c5667d 72%, var(--offer-maroon));
+    content: '';
+  }
+
+  .hamptons-discount-offer .sale_message {
+    display: flex !important;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 14px 16px 13px;
+    background: linear-gradient(112deg, var(--offer-maroon-deep), var(--offer-maroon) 55%, var(--offer-maroon-light));
+    color: #fff8fa;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .hamptons-discount-offer .sale_message::before,
+  .hamptons-discount-offer .sale_message::after {
+    color: #f7dce3;
+    content: '✦';
+    font-size: 14px;
+    line-height: 1;
+    text-shadow: 0 0 12px rgba(255, 220, 230, .72);
+  }
+
+  .hamptons-discount-offer .sale_message::after {
+    margin-left: auto;
+  }
+
+  .hamptons-discount-offer .sale_word {
+    display: inline-flex;
+    align-items: center;
+    min-height: 23px;
+    padding: 3px 8px;
+    border: 1px solid rgba(255, 225, 233, .42);
+    border-radius: 999px;
+    background: rgba(255, 225, 233, .12);
+    color: #f8dfe6;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    white-space: nowrap;
+  }
+
+  .hamptons-discount-offer .promotion-container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-top: 1px solid rgba(217, 154, 169, .55);
+    background: linear-gradient(90deg, rgba(255, 246, 248, .95), rgba(255, 255, 255, .92));
+    transition: background .2s ease, transform .2s ease;
+  }
+
+  .hamptons-discount-offer .promotion-container::before {
+    position: absolute;
+    top: 11px;
+    bottom: 11px;
+    left: 0;
+    width: 3px;
+    border-radius: 0 4px 4px 0;
+    background: var(--offer-maroon-light);
+    content: '';
+    opacity: .7;
+  }
+
+  .hamptons-discount-offer .promotion-container:hover {
+    background: #fff0f3;
+    transform: translateX(2px);
+  }
+
+  .hamptons-discount-offer .promotion-icon {
+    display: grid;
+    flex: 0 0 34px;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #b44d65;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff8fa 0 12%, #f0bac8 34%, #8c233d 100%);
+    box-shadow: 0 4px 9px rgba(98, 22, 45, .2), inset 0 1px 0 rgba(255, 255, 255, .8);
+    color: #fff8fa;
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .hamptons-discount-offer .promotion-details {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    color: var(--offer-ink);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .hamptons-discount-offer .promotion-details b {
+    font-weight: 700;
+    letter-spacing: .015em;
+  }
+
+  .product-info__block-item .hamptons-discount-offer .sale_message,
+  .product-info__block-item .hamptons-discount-offer .promotion-container {
+    display: flex !important;
+  }
+
+  @media screen and (max-width: 480px) {
+    .hamptons-discount-offer .sale_message {
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+
+    .hamptons-discount-offer .sale_word {
+      margin-left: 23px;
+    }
+
+    .hamptons-discount-offer .sale_message::after {
+      display: none;
+    }
+
+    .hamptons-discount-offer .promotion-details {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 3px;
+    }
+  }
+
+</style>
+
+{% if template.suffix == 'less-then-2000' %}
+  <section class="hamptons-discount-offer dicount-information" aria-label="Multi-buy sale offers">
+    <h3 class="sale_message">Diwa-Lit Sale</h3>
+
+    {% if product.tags contains 'itttm-30-off' %}
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 3 &amp; GET 40% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 4 AND PAY ONLY FOR 3</b></div>
+      </div>
+    {% else %}
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY PRODUCT &amp; GET 20% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 3 PRODUCT &amp; GET 25% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 6 &amp; GET A FREE MYSTERY BOX</b></div>
+      </div>
+    {% endif %}
+  </section>
+
+{% elsif template.suffix == 'price-greater-2000' %}
+  <section class="hamptons-discount-offer dicount-information" aria-label="Multi-buy sale offers">
+    <h3 class="sale_message">Diwa-Lit Sale</h3>
+
+    {% if product.tags contains 'itttm-30-off' %}
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 3 &amp; GET 40% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 4 AND PAY ONLY FOR 3</b></div>
+      </div>
+    {% else %}
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY PRODUCT &amp; GET 20% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 3 PRODUCT &amp; GET 25% OFF</b></div>
+      </div>
+      <div class="promotion-container">
+        {{ offer_callout_icon }}
+        <div class="promotion-details"><b>BUY ANY 6 PRODUCT &amp; GET A FREE MYSTERY BOX</b></div>
+      </div>
+    {% endif %}
+  </section>
+{% endif %}

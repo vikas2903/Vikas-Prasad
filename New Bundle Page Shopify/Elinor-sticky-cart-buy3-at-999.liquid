@@ -1,0 +1,498 @@
+<div id="vs-sticky-cart-space" aria-hidden="true"></div>
+
+<aside id="vs-sticky-cart" class="vs-sticky-cart" aria-label="Shopping cart" hidden>
+
+  <div class="vs-sticky-cart__inner">
+
+    <div id="vs-sticky-cart-items" class="vs-sticky-cart__items" hidden></div>
+
+    <div class="vs-pack-progress">
+
+      <ol class="vs-pack-steps" data-cart-pack-steps aria-label="Offer progress"></ol>
+
+      <div class="vs-pack-offer">
+
+        <p data-cart-offer-info aria-live="polite"></p>
+
+        <strong data-cart-bundle-deal>BUY 3 AT ₹999</strong>
+
+      </div>
+
+    </div>
+
+    <div class="vs-sticky-cart__summary">
+
+      <button type="button" class="vs-sticky-cart__toggle" aria-expanded="false" aria-controls="vs-sticky-cart-items">
+
+        <span class="vs-sticky-cart__preview" aria-hidden="true"></span>
+
+        <span><strong data-cart-count></strong><span class="vs-sticky-cart__view">View cart <span data-cart-arrow aria-hidden="true">⌃</span></span></span>
+
+      </button>
+
+      <div class="vs-sticky-cart__total"><s data-cart-original hidden></s><strong data-cart-total></strong><span data-cart-savings hidden></span></div>
+
+      <button type="button" class="vs-sticky-cart__checkout" data-cart-checkout>
+
+        <span data-checkout-label>Checkout</span>
+
+        {% if settings.goEnable %}<img src="https\://cdn.gokwik.co/v4/images/upi-icons.svg" alt="UPI" width="60" height="20">{% endif %}
+
+        <span aria-hidden="true">→</span>
+
+      </button>
+
+    </div>
+
+    <p class="vs-sticky-cart__status" role="status" aria-live="polite"></p>
+
+  </div>
+
+</aside>
+
+<style>
+
+  .vs-sticky-cart { position:fixed; inset:auto 0 0; z-index:1000; background:#fffaf7; color:#2b1920; border-top:1px solid #eadfdc; border-radius:7px 7px 0 0; box-shadow:0 -3px 18px #00000010; padding:12px 20px max(14px,env(safe-area-inset-bottom)); font:12px/1.4 Arial,Helvetica,sans-serif; }
+
+  .vs-sticky-cart *, .vs-sticky-cart *::before { box-sizing:border-box; }
+
+  .vs-sticky-cart[hidden], .vs-sticky-cart [hidden] { display:none !important; }
+
+  .vs-sticky-cart__inner { max-width:1312px; margin:auto; }
+
+  .vs-sticky-cart button { font:inherit; cursor:pointer; text-transform:none; letter-spacing:normal; box-shadow:none; margin:0; }
+
+  .vs-sticky-cart button::before, .vs-sticky-cart button::after { box-shadow:none; }
+
+  .vs-sticky-cart button:focus-visible, .vs-sticky-cart a:focus-visible { outline:2px solid #6a2038; outline-offset:3px; }
+
+  .vs-sticky-cart button:disabled { opacity:.6; cursor:wait; }
+
+  .vs-sticky-cart .vs-pack-progress { min-height:57px; display:flex; align-items:center; gap:14px; padding:10px 15px; background:linear-gradient(90deg,#f2e8e7 0%,#f8f0eb 55%,#fffaf7 100%); border-bottom:1px solid #eadfdc; border-radius:8px; }
+
+  .vs-sticky-cart .vs-pack-steps { display:flex; align-items:center; flex-shrink:0; list-style:none; margin:0; padding:0; }
+
+  .vs-sticky-cart .vs-pack-step { display:flex; align-items:center; }
+
+  .vs-sticky-cart .vs-pack-step + .vs-pack-step::before { content:''; display:block; width:10px; height:2px; background:#c9a9ae; }
+
+  .vs-sticky-cart .vs-step-circle { display:grid; place-items:center; width:34px; height:34px; border:2px solid #6a2038; border-radius:50%; background:#fffaf7; color:#6a2038; font-size:13px; }
+
+  .vs-sticky-cart .vs-pack-step.is-complete .vs-step-circle { background:#4b172b; color:#fffaf7; box-shadow:0 2px 4px #4b172b30; }
+
+  .vs-sticky-cart .vs-pack-step.is-next .vs-step-circle { box-shadow:0 0 0 5px #e9d8d6; }
+
+  .vs-sticky-cart .vs-step-circle svg { width:20px; height:20px; }
+
+  .vs-sticky-cart .vs-pack-offer { min-width:0; line-height:1.4; }
+
+  .vs-sticky-cart .vs-pack-offer p { margin:0; font-size:11px; color:#815d66; }
+
+  .vs-sticky-cart .vs-pack-offer p strong { color:#6a2038; font-weight:600; text-transform:uppercase; }
+
+  .vs-sticky-cart [data-cart-bundle-deal] { font-size:12px; color:#4b172b; font-weight:600; letter-spacing:.4px; }
+
+  .vs-sticky-cart__summary { display:flex; align-items:center; gap:12px; min-height:46px; padding-top:8px; }
+
+  .vs-sticky-cart__toggle { display:flex; flex:1; min-width:0; align-items:center; gap:9px; border:0; padding:0; background:none; color:inherit; text-align:left; }
+
+  .vs-sticky-cart__toggle strong { display:block; font-size:12px; font-weight:500; }
+
+  .vs-sticky-cart__view { display:block; margin-top:3px; color:#866d73; font-size:10px; }
+
+  .vs-sticky-cart__preview { display:flex; flex-shrink:0; }
+
+  .vs-sticky-cart__preview img { width:30px; height:32px; object-fit:cover; border:1px solid #fff; border-radius:5px; }
+
+  .vs-sticky-cart__preview img + img { margin-left:-15px; }
+
+  .vs-sticky-cart__total { flex-shrink:0; text-align:right; }
+
+  .vs-sticky-cart__total strong { display:block; font-size:14px; }
+
+  .vs-sticky-cart__total s { display:block; color:#777; font-size:10px; }
+
+  .vs-sticky-cart__total [data-cart-savings] { display:block; color:#765327; font-size:9px; }
+
+  .vs-sticky-cart .vs-sticky-cart__checkout { display:flex; align-items:center; justify-content:center; gap:9px; min-height:44px; border:0; border-radius:6px; padding:12px 20px; background:#4b172b; color:#fff; font-weight:700; }
+
+  .vs-sticky-cart__checkout img { display:block; width:60px; height:20px; object-fit:contain; }
+
+  .vs-sticky-cart__items { display:flex; gap:14px; overflow:auto; max-height:30vh; margin-bottom:12px; padding:6px 6px 14px 0; border-bottom:1px solid #e8dad8; }
+
+  .vs-sticky-cart__item { position:relative; display:flex; align-items:center; gap:10px; width:236px; min-width:236px; padding:8px; border:1px solid #e8dad8; border-radius:10px; background:#fbf5f0; }
+
+  .vs-sticky-cart__photo { position:relative; flex-shrink:0; width:45px; height:46px; }
+
+  .vs-sticky-cart__photo img { width:100%; height:100%; object-fit:cover; object-position:top; border-radius:5px; }
+
+  .vs-sticky-cart__quantity { position:absolute; bottom:-4px; right:-4px; min-width:18px; padding:1px 4px; border:2px solid #fff; border-radius:12px; background:#b18b57; color:#fff; font-size:10px; text-align:center; }
+
+  .vs-sticky-cart__copy { min-width:0; }
+
+  .vs-sticky-cart__copy a { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:inherit; font-size:11px; text-decoration:none; }
+
+  .vs-sticky-cart__copy span { display:block; color:#666; font-size:10px; }
+
+  .vs-sticky-cart .vs-sticky-cart__remove { position:absolute; top:-5px; right:-5px; display:grid; place-items:center; width:22px; height:22px; padding:0; border:0; border-radius:50%; background:#8c344b; color:#fff; font-size:16px; }
+
+  .vs-sticky-cart__status { margin:6px 0 0; color:#a43245; }
+
+  .vs-sticky-cart__status:empty { display:none; }
+
+  /* The bundle still manages its selections; this global summary owns the visible footer. */
+
+  .vs-bundle [data-bottom-bar] { display:none !important; }
+
+  @media (max-width:749px) {
+
+    .vs-sticky-cart { padding:10px 12px max(10px,env(safe-area-inset-bottom)); }
+
+    .vs-sticky-cart__summary { gap:8px; }
+
+    .vs-sticky-cart .vs-pack-progress { padding:10px; gap:12px; }
+
+    .vs-sticky-cart .vs-step-circle { width:25px; height:25px; font-size:10px; }
+
+    .vs-sticky-cart .vs-pack-offer p { font-size:10px; }
+
+    .vs-sticky-cart .vs-pack-offer p strong { font-size:9px; }
+
+    .vs-sticky-cart__toggle { gap:6px; }
+
+    .vs-sticky-cart__total strong { font-size:13px; }
+
+    .vs-sticky-cart .vs-sticky-cart__checkout { gap:5px; padding:10px 12px; font-size:11px; }
+
+    .vs-sticky-cart__checkout img { width:44px; }
+
+    .vs-sticky-cart__item { width:195px; min-width:195px; }
+
+  }
+
+  @media (max-width:359px) { .vs-sticky-cart__checkout img { display:none; } }
+
+</style>
+
+<script>
+
+(() => {
+
+  if (window.__vsStickyCartInstalled) return;
+
+  window.__vsStickyCartInstalled = true;
+
+  const bar = document.getElementById('vs-sticky-cart');
+
+  const space = document.getElementById('vs-sticky-cart-space');
+
+  const items = bar.querySelector('.vs-sticky-cart__items');
+
+  const toggle = bar.querySelector('.vs-sticky-cart__toggle');
+
+  const checkout = bar.querySelector('[data-cart-checkout]');
+
+  const status = bar.querySelector('.vs-sticky-cart__status');
+
+  const root = {{ routes.cart_url | json }}.replace(/cart\/?$/, '');
+
+  const useGoKwik = {{ settings.goEnable | default: false | json }};
+
+  const storeCurrency = {{ cart.currency.iso_code | default: shop.currency | json }};
+
+  const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+
+  let cart = null;
+
+  let expanded = false;
+
+  let busy = false;
+
+  let timer;
+
+  let refreshPromise = null;
+
+  let refreshAgain = false;
+
+  const money = cents => new Intl.NumberFormat({{ request.locale.iso_code | json }}, {style:'currency', currency:cart?.currency || storeCurrency}).format(Number(cents || 0) / 100);
+
+  const reserveSpace = () => { space.style.height = bar.hidden ? '0px' : `${bar.offsetHeight}px`; };
+
+  function updateControls() {
+
+    checkout.disabled = busy || !cart?.item_count;
+
+    bar.querySelectorAll('[data-remove-line]').forEach(button => { button.disabled = busy; });
+
+    bar.setAttribute('aria-busy', String(busy));
+
+  }
+
+  function render(nextCart) {
+
+    cart = nextCart;
+
+    bar.hidden = !cart.item_count;
+
+    if (!cart.item_count) expanded = false;
+
+    items.hidden = !expanded;
+
+    toggle.setAttribute('aria-expanded', String(expanded));
+
+    bar.querySelector('[data-cart-arrow]').textContent = expanded ? '⌄' : '⌃';
+
+    bar.querySelector('[data-cart-count]').textContent = `${cart.item_count} ${cart.item_count === 1 ? 'item' : 'items'}`;
+
+    const offerQuantity = 3;
+
+    const offerPrice = 99900;
+
+    const remaining = Math.max(0, offerQuantity - cart.item_count);
+
+    bar.querySelector('[data-cart-offer-info]').innerHTML = remaining
+
+      ? `Add <strong>${remaining} more ${remaining === 1 ? 'item' : 'items'}</strong> to reach the offer!`
+
+      : '<strong>Offer unlocked: 3 items for ₹999.</strong>';
+
+    const check = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    bar.querySelector('[data-cart-pack-steps]').innerHTML = Array.from({length:offerQuantity}, (_, index) => `<li class="vs-pack-step ${index < cart.item_count ? 'is-complete' : index === cart.item_count ? 'is-next' : ''}" aria-label="Item ${index + 1}: ${index < cart.item_count ? 'added' : 'remaining'}"><span class="vs-step-circle">${index < cart.item_count ? check : index + 1}</span></li>`).join('');
+
+    // The first three items are the ₹999 bundle; every item after that keeps its regular price.
+    let offerSlots = offerQuantity;
+    const additionalItemsTotal = cart.items.reduce((total, item) => {
+      const bundleItems = Math.min(offerSlots, item.quantity);
+      offerSlots -= bundleItems;
+      return total + Math.max(0, item.quantity - bundleItems) * item.final_price;
+    }, 0);
+    const displayedTotal = cart.item_count >= offerQuantity
+      ? offerPrice + additionalItemsTotal
+      : cart.total_price;
+
+    bar.querySelector('[data-cart-total]').textContent = money(displayedTotal);
+
+    const savings = Math.max(0, cart.original_total_price - displayedTotal);
+
+    const original = bar.querySelector('[data-cart-original]');
+
+    original.hidden = !savings;
+
+    original.textContent = money(cart.original_total_price);
+
+    const savingsLabel = bar.querySelector('[data-cart-savings]');
+
+    savingsLabel.hidden = !savings;
+
+    savingsLabel.textContent = `SAVE ${money(savings)}`;
+
+    items.innerHTML = cart.items.map(item => `<div class="vs-sticky-cart__item">
+
+      <div class="vs-sticky-cart__photo">${item.image ? `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.product_title)}" width="45" height="46">` : ''}<span class="vs-sticky-cart__quantity">${item.quantity}</span></div>
+
+      <div class="vs-sticky-cart__copy"><a href="${escapeHTML(item.url)}">${escapeHTML(item.product_title)}</a><span>${escapeHTML(item.variant_title === 'Default Title' ? '' : item.variant_title)}</span><span>${escapeHTML(money(item.final_line_price))}</span></div>
+
+      <button type="button" class="vs-sticky-cart__remove" data-remove-line="${escapeHTML(item.key)}" aria-label="Remove one ${escapeHTML(item.product_title)}">×</button>
+
+    </div>`).join('');
+
+    bar.querySelector('.vs-sticky-cart__preview').innerHTML = cart.items.flatMap(item => Array.from({length:Math.min(item.quantity, 3)}, () => item)).slice(0, 3).filter(item => item.image).map(item => `<img src="${escapeHTML(item.image)}" alt="" width="30" height="32">`).join('');
+
+    updateControls();
+
+    reserveSpace();
+
+  }
+
+  async function request(path, body) {
+
+    const response = await fetch(root + path, {credentials:'same-origin', headers:{'Accept':'application/json', ...(body ? {'Content-Type':'application/json'} : {})}, ...(body ? {method:'POST', body:JSON.stringify(body)} : {})});
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.description || data.message || 'Unable to update your cart. Please try again.');
+
+    return data;
+
+  }
+
+  function refresh() {
+
+    if (refreshPromise) { refreshAgain = true; return refreshPromise; }
+
+    refreshPromise = (async () => {
+
+      do {
+
+        refreshAgain = false;
+
+        render(await request('cart.js'));
+
+      } while (refreshAgain);
+
+    })().finally(() => { refreshPromise = null; });
+
+    return refreshPromise;
+
+  }
+
+  function scheduleRefresh() {
+
+    clearTimeout(timer);
+
+    timer = setTimeout(() => { refresh().catch(() => { /* Keep the last confirmed cart on read failures. */ }); }, 100);
+
+  }
+
+  toggle.addEventListener('click', () => { expanded = !expanded; if (cart) render(cart); });
+
+  items.addEventListener('click', async event => {
+
+    const button = event.target.closest('[data-remove-line]');
+
+    if (!button || busy) return;
+
+    busy = true;
+
+    status.textContent = '';
+
+    updateControls();
+
+    try {
+
+      await refresh();
+
+      const item = cart.items.find(item => item.key === button.dataset.removeLine);
+
+      if (item) {
+
+        await request('cart/change.js', {id:item.key, quantity:Math.max(0, item.quantity - 1)});
+
+        await refresh();
+
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+
+        if (window.publish && window.PUB_SUB_EVENTS) window.publish(window.PUB_SUB_EVENTS.cartUpdate, {source:'vs-sticky-cart'});
+
+      }
+
+    } catch (error) { status.textContent = error.message; }
+
+    finally { busy = false; updateControls(); reserveSpace(); }
+
+  });
+
+  checkout.addEventListener('click', async event => {
+
+    event.preventDefault();
+
+    event.stopImmediatePropagation();
+
+    if (busy) return;
+
+    busy = true;
+
+    status.textContent = '';
+
+    bar.querySelector('[data-checkout-label]').textContent = 'Loading…';
+
+    updateControls();
+
+    try {
+
+      await refresh();
+
+      if (!cart.item_count) return;
+
+      const goKwik = typeof onCheckoutClick === 'function' ? onCheckoutClick : window.onCheckoutClick;
+
+      if (useGoKwik && typeof goKwik === 'function') await goKwik(checkout);
+
+      else window.location.assign(root + 'checkout');
+
+    } catch (error) { status.textContent = error.message || 'Unable to start checkout. Please try again.'; }
+
+    finally { busy = false; bar.querySelector('[data-checkout-label]').textContent = 'Checkout'; updateControls(); reserveSpace(); }
+
+  }, {capture:true});
+
+  // Observe successful AJAX mutations from product forms, quick add, bundle cards and apps.
+
+  function isCartMutation(input) {
+
+    try {
+
+      const url = new URL(typeof input === 'string' || input instanceof URL ? input : input.url, window.location.href);
+
+      return url.origin === window.location.origin && /\/cart\/(add|change|update|clear)(?:\.js)?\/?$/.test(url.pathname);
+
+    } catch (_) { return false; }
+
+  }
+
+  const originalFetch = window.fetch;
+
+  window.fetch = function (...args) {
+
+    return originalFetch.apply(this, args).then(response => {
+
+      if (response.ok && isCartMutation(args[0])) scheduleRefresh();
+
+      return response;
+
+    });
+
+  };
+
+  const originalOpen = XMLHttpRequest.prototype.open;
+
+  const originalSend = XMLHttpRequest.prototype.send;
+
+  const mutationRequests = new WeakMap();
+
+  XMLHttpRequest.prototype.open = function (method, url, ...args) {
+
+    mutationRequests.set(this, isCartMutation(url));
+
+    return originalOpen.call(this, method, url, ...args);
+
+  };
+
+  XMLHttpRequest.prototype.send = function (...args) {
+
+    this.addEventListener('load', () => {
+
+      if (this.status >= 200 && this.status < 300 && mutationRequests.get(this)) scheduleRefresh();
+
+    }, {once:true});
+
+    return originalSend.apply(this, args);
+
+  };
+
+  ['cart:updated', 'cart:change', 'cart:refresh', 'cart:updated:progress'].forEach(name => document.addEventListener(name, scheduleRefresh));
+
+  window.addEventListener('pageshow', scheduleRefresh);
+
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) scheduleRefresh(); });
+
+  window.addEventListener('resize', reserveSpace);
+
+  if ('ResizeObserver' in window) new ResizeObserver(reserveSpace).observe(bar);
+
+  function initialise() {
+
+    if (window.subscribe && window.PUB_SUB_EVENTS) window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, scheduleRefresh);
+
+    scheduleRefresh();
+
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialise, {once:true});
+
+  else initialise();
+
+})();
+
+</script>

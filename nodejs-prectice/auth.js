@@ -4,7 +4,6 @@ const AuthApp = express();
 import AuthRoute from "./route/authroute.js";
 import connectDB from "./config/db.js";
 
-
 AuthApp.use(express.json());
 
 async function runauthServer() {
