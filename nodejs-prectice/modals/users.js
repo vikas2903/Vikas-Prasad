@@ -41,10 +41,10 @@ const userSchema = new mongoose.Schema({
         type: String,
      
     },
-    phoneno: {
+    phonenumber: {
         type: String,
-     
-        unique: true
+        unique: true,
+        sparse: true
     },
     address: {
         type: String

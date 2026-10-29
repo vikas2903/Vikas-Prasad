@@ -16,7 +16,6 @@ export const sendOTP = async (req, res) => {
         let user = await User.findOne({ email: email });
         if (user) {
             const updatedUser = await User.findOneAndUpdate({ email: email }, { otp: hashedOtp, updatedAt: Date.now() }, { new: true });
-            await sendEmail(email, "Verify Your Email", otp, res);
             await updatedUser.save();
         } else {
             const UserData = new User({
@@ -83,7 +82,7 @@ export const verifyOtp = async (req, res) => {
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword, phoneno, address } = req.body;
+        const { name, email, password, confirmPassword, phonenumber, address } = req.body;
 
         if (password !== confirmPassword) {
             return res.status(400).json({
@@ -95,7 +94,11 @@ export const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10);
 
-        const user = await User.findOneAndUpdate({ email: email }, { name, password: hashedPassword, confirmPassword: hashedConfirmPassword, phoneno, address }, { new: true });
+        const user = await User.findOneAndUpdate(
+            { email: email },
+            { name, password: hashedPassword, confirmPassword: hashedConfirmPassword, phonenumber, address },
+            { new: true }
+        );
         if (!user) {
             return res.status(400).json({
                 message: "User not found",

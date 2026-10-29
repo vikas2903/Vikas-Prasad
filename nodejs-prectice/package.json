@@ -2,17 +2,18 @@
   "name": "shopable-video",
   "version": "1.0.0",
   "description": "",
-  "main": "auth.js",
+  "main": "tryon.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon auth.js",
-    "dev": "nodemon auth.js"
+    "start": "nodemon tryon.js",
+    "dev": "nodemon tryon.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@genlook/api": "^0.6.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.10.0",
