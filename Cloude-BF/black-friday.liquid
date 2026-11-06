@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>{{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <meta property="og:site_name" content="{{ shop.name | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ page_title | escape }}">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="{{ page_description | default: shop.description | escape }}">
+    {%- if page_image -%}
+      <meta property="og:image" content="https:{{ page_image | image_url: width: 1200 }}">
+    {%- endif -%}
+    <meta name="twitter:card" content="summary_large_image">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+
+    <style>
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      body { margin: 0; background: #000; color: #F4EFE6; }
+      html:has(dialog[open]) { overflow: hidden; }
+      .bf-skip { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: #F2DCA4; color: #000; padding: 10px 16px; border-radius: 999px; font: 600 14px/1 system-ui, sans-serif; }
+      .bf-skip:focus { left: 12px; }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+  <body>
+    <a class="bf-skip" href="#bf-main">Skip to content</a>
+    {{ content_for_layout }}
+  </body>
+</html>

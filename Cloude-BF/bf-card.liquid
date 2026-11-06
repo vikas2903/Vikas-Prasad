@@ -1,0 +1,117 @@
+{%- comment -%}
+  Black Friday product card.
+  Params:
+    product     – product object (required)
+    sizes       – sizes attribute for responsive images
+    show_timer  – true to show a countdown on the card
+    timer_end   – ISO date string for the card countdown
+    eager       – true to load the image eagerly
+{%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign pct = 0
+  assign on_sale = false
+  if p.compare_at_price > p.price
+    assign on_sale = true
+    assign pct = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price
+  endif
+
+  assign tag_str = p.tags | join: '|' | downcase
+  assign badge = ''
+  if tag_str contains 'bestseller' or tag_str contains 'best seller'
+    assign badge = 'Bestseller'
+  elsif tag_str contains 'limited'
+    assign badge = 'Limited offer'
+  elsif on_sale
+    assign badge = 'Black Friday deal'
+  endif
+
+  assign img_alt = p.featured_image.alt | default: p.title | escape
+  assign img_sizes = sizes | default: '(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw'
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+
+  assign rating = p.metafields.reviews.rating.value
+  assign rating_count = p.metafields.reviews.rating_count.value
+-%}
+{%- capture variant_summary -%}
+  {%- for opt in p.options_with_values -%}
+    {%- unless opt.name == 'Title' -%}
+      {{- opt.values.size }} {{ opt.name | downcase -}}{%- if opt.values.size > 1 -%}s{%- endif -%}
+      {%- unless forloop.last -%}, {% endunless -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<article
+  class="bf-card{% unless p.available %} is-soldout{% endunless %}"
+  data-card
+  data-handle="{{ p.handle }}"
+  data-type="{{ p.type | escape }}"
+  data-price="{{ p.price }}"
+  data-available="{{ p.available }}"
+  data-pct="{{ pct }}"
+>
+  <div class="bf-card__media">
+    <a href="{{ p.url }}" class="bf-card__link" data-quickview="{{ p.handle }}" tabindex="-1" aria-hidden="true">
+      {%- if p.featured_image -%}
+        {{ p.featured_image | image_url: width: 900 | image_tag: loading: loading, widths: '300,450,600,750,900', sizes: img_sizes, alt: img_alt, class: 'bf-card__img' }}
+        {%- if p.images.size > 1 -%}
+          {{ p.images[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,750,900', sizes: img_sizes, alt: '', class: 'bf-card__img bf-card__img--alt' }}
+        {%- endif -%}
+      {%- else -%}
+        <span class="bf-card__noimg">{{ p.title }}</span>
+      {%- endif -%}
+    </a>
+    {%- if badge != '' -%}<span class="bf-badge">{{ badge }}</span>{%- endif -%}
+    {%- if pct > 0 -%}<span class="bf-pct" aria-label="{{ pct }} percent off">−{{ pct }}%</span>{%- endif -%}
+    <button type="button" class="bf-card__qv" data-quickview="{{ p.handle }}">Quick view<span class="bf-sr"> {{ p.title | escape }}</span></button>
+  </div>
+
+  <div class="bf-card__body">
+    <h3 class="bf-card__title">
+      <a href="{{ p.url }}" data-quickview="{{ p.handle }}">{{ p.title }}</a>
+    </h3>
+
+    {%- if rating and rating.rating > 0 -%}
+      {%- assign stars = rating.rating | times: 20 -%}
+      <p class="bf-rating" aria-label="Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max }}">
+        <span class="bf-stars" style="--fill: {{ stars }}%" aria-hidden="true"></span>
+        {%- if rating_count -%}<span class="bf-rating__n">({{ rating_count }})</span>{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    <p class="bf-price">
+      {%- if on_sale -%}
+        <span class="bf-price__now">{% if p.price_varies %}From {% endif %}{{ p.price | money }}</span>
+        <s class="bf-price__was"><span class="bf-sr">Was </span>{{ p.compare_at_price | money }}</s>
+      {%- else -%}
+        <span class="bf-price__now">{% if p.price_varies %}From {% endif %}{{ p.price | money }}</span>
+      {%- endif -%}
+    </p>
+
+    {%- assign variant_summary = variant_summary | strip -%}
+    {%- if variant_summary != '' -%}
+      <p class="bf-card__variants">{{ variant_summary }}</p>
+    {%- endif -%}
+
+    {%- if show_timer and timer_end != blank -%}
+      <div class="bf-minicount" data-countdown="{{ timer_end }}" data-compact>
+        <span class="bf-minicount__label">Offer ends in</span>
+        <span class="bf-minicount__time"><span data-unit="d">00</span>d <span data-unit="h">00</span>h <span data-unit="m">00</span>m <span data-unit="s">00</span>s</span>
+      </div>
+    {%- endif -%}
+
+    {%- if p.available -%}
+      {%- if p.has_only_default_variant -%}
+        <button type="button" class="bf-btn bf-btn--line bf-btn--block" data-add="{{ p.first_available_variant.id }}" data-handle="{{ p.handle }}">Add to cart</button>
+      {%- else -%}
+        <button type="button" class="bf-btn bf-btn--line bf-btn--block" data-quickview="{{ p.handle }}">Choose options</button>
+      {%- endif -%}
+    {%- else -%}
+      <button type="button" class="bf-btn bf-btn--line bf-btn--block" disabled>Sold out</button>
+    {%- endif -%}
+  </div>
+</article>

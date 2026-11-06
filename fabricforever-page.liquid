@@ -1,0 +1,125 @@
+<section id="fabricforever-banner-{{ section.id }}" class="fabricforever-banner">
+  <style>
+    #fabricforever-banner-{{ section.id }} { background: #000; line-height: 0; }
+    #fabricforever-banner-{{ section.id }} picture, 
+    #fabricforever-banner-{{ section.id }} img { display: block; width: 100%; }
+    #fabricforever-banner-{{ section.id }} img { height: auto; object-fit: cover; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-banner__placeholder { display: grid; min-height: 280px; place-items: center; border-block: 1px solid #3b3b3b; color: #fff; font: 600 .75rem/1 system-ui, sans-serif; letter-spacing: .14em; text-align: center; text-transform: uppercase; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form { position: relative; padding: 74px 16px; border-top: 2px solid #120c05; background: #120c05; color: #fff; overflow: hidden; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form::before, #fabricforever-banner-{{ section.id }} .fabricforever-form::after { content: ""; position: absolute; width: 280px; height: 280px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; pointer-events: none; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form::before { left: -155px; bottom: -185px; border-color: rgba(206,17,120,.32); box-shadow: 0 0 0 26px rgba(206,17,120,.09), 0 0 0 52px rgba(206,17,120,.04); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form::after { right: -160px; top: -185px; border-color: rgba(206,17,120,.32); box-shadow: 0 0 0 24px rgba(206,17,120,.08), 0 0 0 50px rgba(206,17,120,.035); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form__inner { position: relative; z-index: 1; width: min(600px, 100%); margin: auto; padding: 42px; border: 1px solid #ce1178; border-radius: 14px; background: #050505; box-shadow: 0 26px 55px -34px rgba(206,17,120,.8); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form__inner::before { content: "BLACK FRIDAY ACCESS"; display: block; margin-bottom: 10px; color: #ce1178; font: 800 .62rem/1 system-ui, sans-serif; letter-spacing: .17em; text-align: center; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form h2 { margin: 0 0 10px; color: #fff; font: 400 clamp(2.1rem, 5vw, 3.35rem)/.95 Georgia, serif; letter-spacing: -.05em; text-align: center; text-transform: uppercase; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-form__text { margin: 0 0 27px; color: #bdbdbd; font: .98rem/1.55 system-ui, sans-serif; text-align: center; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-field { display: block; margin: 12px 0; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-field span { display: block; margin-bottom: 6px; color: #ce1178; font: 700 .62rem/1 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-field input { width: 100%; min-height: 58px; padding: 0 16px; border: 1px solid #4e4e4e; border-radius: 7px; outline: 0; color: #fff; background: #000; font: 1rem system-ui, sans-serif; transition: border-color .2s, box-shadow .2s; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-field input:focus { border-color: #ce1178; box-shadow: 0 0 0 3px rgba(206,17,120,.22); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-button { width: 100%; min-height: 58px; margin-top: 10px; border: 1px solid #ce1178; border-radius: 7px; color: #fff; background: #ce1178; cursor: pointer; font: 800 .76rem/1 system-ui, sans-serif; letter-spacing: .13em; text-transform: uppercase; transition: background .2s, color .2s, transform .2s, box-shadow .2s; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-button:hover { color: #ce1178; background: #000; transform: translateY(-2px); box-shadow: 0 14px 28px -12px rgba(206,17,120,.8); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success { position: fixed; z-index: 9999; top: 50%; left: 50%; width: min(480px, calc(100% - 32px)); padding: 39px 35px 32px; border: 1px solid #ce1178; border-radius: 18px; color: #fff; background: radial-gradient(circle at 50% -22%, rgba(206,17,120,.36), transparent 44%), #050505; box-shadow: 0 32px 90px -24px rgba(0,0,0,.9), 0 0 0 1px rgba(206,17,120,.25), 0 0 0 100vmax rgba(0,0,0,.78); font: 1rem/1.55 system-ui, sans-serif; text-align: center; transform: translate(-50%, -50%); animation: fabricforever-pop .35s ease-out both; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__icon { display: grid; width: 56px; height: 56px; margin: 0 auto 18px; place-items: center; border: 1px solid #ff88c5; border-radius: 50%; color: #fff; background: #ce1178; box-shadow: 0 0 0 8px rgba(206,17,120,.14), 0 12px 24px -14px rgba(206,17,120,.95); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__icon svg { width: 27px; height: 27px; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__eyebrow { display: block; margin-bottom: 10px; color: #ff8bc8; font: 800 .65rem/1 system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success h3 { margin: 0; color: #fff; font: 400 clamp(1.8rem, 6vw, 2.5rem)/.98 Georgia, serif; letter-spacing: -.05em; text-transform: uppercase; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success p { margin: 12px auto 20px; color: #d8c0ce; font-size: .9rem; line-height: 1.55; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__redirect { display: flex; align-items: center; justify-content: center; gap: 7px; color: #fff; font-size: .76rem; font-weight: 700; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__redirect b { color: #ff8bc8; }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__progress { height: 3px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.16); }
+    #fabricforever-banner-{{ section.id }} .fabricforever-success__progress i { display: block; width: 100%; height: 100%; transform-origin: left; background: #ce1178; animation: fabricforever-progress 3s linear forwards; }
+    @keyframes fabricforever-pop { from { opacity: 0; transform: translate(-50%, -46%) scale(.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+    @keyframes fabricforever-progress { to { transform: scaleX(0); } }
+    #fabricforever-banner-{{ section.id }} .fabricforever-error { margin-top: 10px; color: #fff; font: .78rem/1.45 system-ui, sans-serif; }
+    @media (max-width: 749px) {
+      #fabricforever-banner-{{ section.id }} .fabricforever-banner__placeholder { min-height: 180px; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-form { padding: 34px 16px; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-form__inner { width: min(410px, 100%); padding: 24px 20px; border-radius: 10px; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-form h2 { font-size: 2rem; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-form__text { margin-bottom: 18px; font-size: .84rem; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-field { margin: 10px 0; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-field input, #fabricforever-banner-{{ section.id }} .fabricforever-button { min-height: 47px; font-size: .85rem; }
+      #fabricforever-banner-{{ section.id }} .fabricforever-success { padding: 29px 22px 24px; font-size: .88rem; }
+    }
+  </style>
+
+  {%- if section.settings.desktop_banner != blank -%}
+    <picture>
+      {%- if section.settings.mobile_banner != blank -%}
+        <source media="(max-width: 749px)" srcset="{{ section.settings.mobile_banner | image_url: width: 1000 }}">
+      {%- endif -%}
+      {{ section.settings.desktop_banner | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,1800,2400', sizes: '100vw', alt: section.settings.desktop_banner.alt | default: shop.name }}
+    </picture>
+  {%- else -%}
+    <div class="fabricforever-banner__placeholder">Select a desktop banner image</div>
+  {%- endif -%}
+
+  <div class="fabricforever-form">
+    <div class="fabricforever-form__inner">
+      {%- form 'customer', id: 'fabricforever-signup' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="fabricforever-success" data-subscribe-success role="status">
+            <div class="fabricforever-success__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.4 4.3L19 7.4"/></svg></div>
+            <span class="fabricforever-success__eyebrow">Black Friday access unlocked</span>
+            <h3>You’re on the list</h3>
+            <p>Thanks for subscribing. Your exclusive sale access is confirmed.</p>
+            <div class="fabricforever-success__redirect">Opening the collection in <b data-redirect-seconds>3</b> seconds</div>
+            <div class="fabricforever-success__progress" aria-hidden="true"><i></i></div>
+          </div>
+        {%- else -%}
+          <h2>{{ section.settings.form_heading }}</h2>
+          <p class="fabricforever-form__text">{{ section.settings.form_text }}</p>
+          <input type="hidden" name="contact[tags]" value="black friday sale">
+          <input type="hidden" name="contact[accepts_marketing]" value="true">
+          <input type="hidden" name="contact[first_name]" data-ff-first>
+          <input type="hidden" name="contact[last_name]" data-ff-last>
+          <label class="fabricforever-field"><span>Full name</span><input type="text" required autocomplete="name" placeholder="Your full name" data-ff-name></label>
+          <label class="fabricforever-field"><span>Email address</span><input type="email" required autocomplete="email" name="contact[email]" placeholder="you@example.com" data-ff-email></label>
+          <button class="fabricforever-button" type="submit">{{ section.settings.button_label }}</button>
+          {%- if form.errors -%}<div class="fabricforever-error" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.getElementById('fabricforever-banner-{{ section.id }}');
+    const form = root && root.querySelector('#fabricforever-signup');
+    const success = root && root.querySelector('[data-subscribe-success]');
+    if (success) {
+      const seconds = success.querySelector('[data-redirect-seconds]');
+      let remaining = 3;
+      const ticker = setInterval(() => { remaining -= 1; if (seconds) seconds.textContent = Math.max(remaining, 0); if (remaining <= 0) clearInterval(ticker); }, 1000);
+      setTimeout(() => { window.location.assign('https://fabricforever.in/collections/precut-fabrics-new'); }, 3000);
+      return;
+    }
+    if (!form) return;
+    form.addEventListener('submit', event => {
+      const name = form.querySelector('[data-ff-name]');
+      const email = form.querySelector('[data-ff-email]');
+      if (!name || !email || !name.value.trim() || !email.validity.valid) { event.preventDefault(); (name && !name.value.trim() ? name : email).focus(); return; }
+      const parts = name.value.trim().replace(/\s+/g, ' ').split(' ');
+      form.querySelector('[data-ff-first]').value = parts.shift();
+      form.querySelector('[data-ff-last]').value = parts.join(' ');
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FabricForever ",
+  "tag": "section",
+  "class": "fabricforever-image-banner-section",
+  "settings": [
+    { "type": "image_picker", "id": "desktop_banner", "label": "Desktop banner" },
+    { "type": "image_picker", "id": "mobile_banner", "label": "Mobile banner", "info": "Used on screens under 750px wide." },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Get Black Friday access" },
+    { "type": "textarea", "id": "form_text", "label": "Form text", "default": "Sign up for first access to our Black Friday offers." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Join the list" }
+  ],
+  "presets": [{ "name": "FabricForever" }]
+}
+{% endschema %}
